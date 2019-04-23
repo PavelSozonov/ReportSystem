@@ -7,9 +7,10 @@ package ru.innoreport.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ru.innoreport.service.ReportService;
 import ru.innoreport.dao.Report;
+import ru.innoreport.service.ReportService;
 
 import java.util.List;
 
@@ -22,5 +23,10 @@ public class ReportController {
     @GetMapping("/report")
     public List<Report> getReports() {
         return reportService.getReports();
+    }
+
+    @GetMapping("/report/{id}")
+    public Report getReport(@PathVariable("id") Long id) {
+        return reportService.getReport(id);
     }
 }

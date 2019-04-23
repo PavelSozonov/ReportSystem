@@ -30,4 +30,19 @@ public class ReportService {
         ).stream().collect(Collectors.toList());
     }
 
+    public Report getReport(Long id) {
+
+        return jdbcTemplate.query(
+                "SELECT id, title, description, sender, recipient, status, changedate, number FROM reports WHERE id=?", new Object[] { id },
+                (rs, rowNum) -> new Report(rs.getLong("id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getString("sender"),
+                        rs.getString("recipient"),
+                        rs.getInt("status"),
+                        rs.getString("changedate"),
+                        rs.getString("number")
+                )
+        ).stream().collect(Collectors.toList()).get(0);
+    }
 }
