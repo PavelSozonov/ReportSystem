@@ -19,7 +19,7 @@ public class ReportController {
     @Autowired
     ReportService reportService;
 
-    @GetMapping("/reports")
+    @GetMapping("/report")
     public List<Report> getReports() {
         return reportService.getReports();
     }
