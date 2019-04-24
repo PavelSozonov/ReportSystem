@@ -26,7 +26,6 @@ public class UserController {
         return userService.getUsers();
     }
 
-
     @PostMapping(path = "/user", consumes = "application/json")
     public String addUser(@RequestBody(required = true) String json) throws Exception {
         JSONObject jsonObject = new JSONObject(json);

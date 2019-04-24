@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.innoreport.dao.Report;
+import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.service.ReportService;
 
 import java.util.List;
@@ -21,12 +22,17 @@ public class ReportController {
     ReportService reportService;
 
     @GetMapping("/report")
-    public List<Report> getReports() {
-        return reportService.getReports();
+    public List<Report> getReportsView() {
+        return reportService.getReportsView();
     }
 
     @GetMapping("/report/{id}")
     public Report getReport(@PathVariable("id") Long id) {
         return reportService.getReport(id);
+    }
+
+    @GetMapping("/report_history")
+    public List<ReportHistory> getReportHistory() {
+        return reportService.getReportHistoryView();
     }
 }
