@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
+import ru.innoreport.dao.ReportTags;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,5 +59,18 @@ public class ReportService {
                         rs.getString("number")
                 )
         ).stream().collect(Collectors.toList()).get(0);
+    }
+
+
+    public List<ReportTags> getReportTagsView() {
+
+        return jdbcTemplate.query(
+                "SELECT * FROM v_reporttags",
+                (rs, rowNum) -> new ReportTags(rs.getLong("nid"),
+                        rs.getLong("nreport"),
+                        rs.getString("snumber"),
+                        rs.getString("scode")
+                )
+        ).stream().collect(Collectors.toList());
     }
 }

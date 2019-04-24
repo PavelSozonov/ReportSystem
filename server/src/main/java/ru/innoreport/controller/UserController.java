@@ -8,9 +8,7 @@ package ru.innoreport.controller;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.innoreport.dao.Report;
-import ru.innoreport.dao.User;
-import ru.innoreport.service.ReportService;
+import ru.innoreport.dao.UserList;
 import ru.innoreport.service.UserService;
 
 import java.util.List;
@@ -21,9 +19,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user")
-    public List<User> getUsers() {
-        return userService.getUsers();
+    @GetMapping("/userlist")
+    public List<UserList> getUsersListView() {
+        return userService.getUserListView();
     }
 
     @PostMapping(path = "/user", consumes = "application/json")

@@ -11,16 +11,17 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class ReportTags implements Serializable {
 
     @Id
     private Long id;
 
     @NotBlank
-    private String code;
+    private Long report;
 
     @NotBlank
-    private String name;
+    private String number;
 
-    private Long entity;
+    @NotBlank
+    private String code;
 }

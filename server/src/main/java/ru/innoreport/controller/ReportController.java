@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
+import ru.innoreport.dao.ReportTags;
 import ru.innoreport.service.ReportService;
 
 import java.util.List;
@@ -32,7 +33,12 @@ public class ReportController {
     }
 
     @GetMapping("/report_history")
-    public List<ReportHistory> getReportHistory() {
+    public List<ReportHistory> getReportHistoryView() {
         return reportService.getReportHistoryView();
+    }
+
+    @GetMapping("/report_tags")
+    public List<ReportTags> getReportTagView() {
+        return reportService.getReportTagsView();
     }
 }
