@@ -2,12 +2,15 @@ package ru.innoreport.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.dao.ReportTags;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -61,7 +64,6 @@ public class ReportService {
         ).stream().collect(Collectors.toList()).get(0);
     }
 
-
     public List<ReportTags> getReportTagsView() {
 
         return jdbcTemplate.query(
@@ -72,5 +74,67 @@ public class ReportService {
                         rs.getString("scode")
                 )
         ).stream().collect(Collectors.toList());
+    }
+
+    public String insertIntoReportHistory(String report, String status, String changeDate) {
+        final SimpleJdbcCall insertIntoReportHistory = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reporthistory_insert");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nreport", report);
+        params.put("nstatus", status);
+        params.put("dchangedate", changeDate);
+
+        final Map<String, Object> result = insertIntoReportHistory.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String updateReportStatus(String id, String status) {
+        final SimpleJdbcCall changeReportStatus = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_changestatus");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nid", id);
+        params.put("nstatus", status);
+
+        final Map<String, Object> result = changeReportStatus.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String insertIntoReports(String title, String description, String sender) {
+        final SimpleJdbcCall insertIntoReports = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_insert");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("stitle", title);
+        params.put("sdescription", description);
+        params.put("ssender", sender);
+
+        final Map<String, Object> result = insertIntoReports.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String sendReportStatus(String id, String entity) {
+        final SimpleJdbcCall sentReportsStatus = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_sent");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nid", id);
+        params.put("sentity", entity);
+
+        final Map<String, Object> result = sentReportsStatus.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String insertReportTags(String report, String tag) {
+        final SimpleJdbcCall insertReportTags = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reporttags_insert");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nreport", report);
+        params.put("stag", tag);
+
+        final Map<String, Object> result = insertReportTags.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String insertIntoTagList(String code, String name) {
+        final SimpleJdbcCall insertIntoTagList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_taglist_insert");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("scode", code);
+        params.put("sname", name);
+
+        final Map<String, Object> result = insertIntoTagList.execute(params);
+        return result.get("returnvalue").toString();
     }
 }

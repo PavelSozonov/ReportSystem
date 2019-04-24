@@ -29,14 +29,35 @@ public class UserService {
         ).stream().collect(Collectors.toList());
     }
 
-    public String addUser(String userName) {
-        final SimpleJdbcCall insertUser = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_userlist_insert");
+    public String deleteFromUserList(String id) {
+        final SimpleJdbcCall deleteFromUserList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_userlist_delete");
         final Map<String, Object> params = new HashMap<>();
-        params.put("scode", userName);
-        params.put("sname", userName);
-        params.put("sentity", 100);
+        params.put("nid", id);
 
-        final Map<String, Object> result = insertUser.execute(params);
+        final Map<String, Object> result = deleteFromUserList.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String insertIntoUserList(String code, String name, String entity) {
+        final SimpleJdbcCall insertIntoUserList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_userlist_insert");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("scode", code);
+        params.put("sname", name);
+        params.put("sentity", entity);
+
+        final Map<String, Object> result = insertIntoUserList.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String updateUserList(String id, String code, String name, String entity) {
+        final SimpleJdbcCall updateUserList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_userlist_update");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nid", id);
+        params.put("scode", code);
+        params.put("sname", name);
+        params.put("sentity", entity);
+
+        final Map<String, Object> result = updateUserList.execute(params);
         return result.get("returnvalue").toString();
     }
 }
