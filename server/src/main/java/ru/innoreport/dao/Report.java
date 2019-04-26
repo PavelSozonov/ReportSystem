@@ -2,9 +2,9 @@ package ru.innoreport.dao;
 
 import lombok.*;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import javax.persistence.Id;
 
 @Data
 @ToString
@@ -31,7 +31,7 @@ public class Report implements Serializable {
     private Integer status;
 
     @NotBlank
-    private String changeDate;
+    private Long changeDate;
 
     @NotBlank
     private String number;

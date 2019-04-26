@@ -29,7 +29,7 @@ public class ReportService {
                         rs.getString("ssender"),
                         rs.getString("srecipient"),
                         rs.getInt("nstatus"),
-                        rs.getString("dchangedate"),
+                        rs.getTimestamp("dchangedate").getTime(),
                         rs.getString("snumber")
                 )
         ).stream().collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class ReportService {
                         rs.getString("sender"),
                         rs.getString("recipient"),
                         rs.getInt("status"),
-                        rs.getString("changedate"),
+                        rs.getTimestamp("changedate").getTime(),
                         rs.getString("number")
                 )
         ).stream().collect(Collectors.toList()).get(0);
