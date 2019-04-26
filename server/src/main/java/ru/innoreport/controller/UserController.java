@@ -42,4 +42,12 @@ public class UserController {
     public String deleteFromUserList(@PathVariable("id") String id) throws Exception {
         return userService.deleteFromUserList(id);
     }
+
+    @PutMapping(path = "/user/password", consumes = "application/json")
+    public String setUserPassword(@RequestBody(required = true) String json) throws Exception {
+        JSONObject jsonObject = new JSONObject(json);
+        Long id = Long.parseLong(jsonObject.get("id").toString());
+        String password = jsonObject.get("password").toString();
+        return userService.setUserPassword(id, password);
+    }
 }

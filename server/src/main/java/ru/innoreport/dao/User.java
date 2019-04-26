@@ -26,4 +26,7 @@ public class User implements Serializable {
 
     // Department (if NULL then it is simple user, if not NULL then user is admin, can change status and see all reports)
     private String entity;
+
+
+    //private String password;
 }

@@ -25,7 +25,7 @@ public class UserService {
                         rs.getString("scode"),
                         rs.getString("sname"),
                         rs.getString("sentity")
-                        )
+                )
         ).stream().collect(Collectors.toList());
     }
 
@@ -58,6 +58,16 @@ public class UserService {
         params.put("sentity", entity);
 
         final Map<String, Object> result = updateUserList.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
+    public String setUserPassword(Long id, String password) {
+        final SimpleJdbcCall setUserPassword = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_userlist_set_password");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nid", id);
+        params.put("spassword", password);
+
+        final Map<String, Object> result = setUserPassword.execute(params);
         return result.get("returnvalue").toString();
     }
 }
