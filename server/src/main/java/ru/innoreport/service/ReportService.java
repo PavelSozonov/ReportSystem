@@ -43,7 +43,7 @@ public class ReportService {
                         rs.getLong("nreport"),
                         rs.getString("snumber"),
                         rs.getInt("nstatus"),
-                        rs.getString("dchangedate")
+                        rs.getTimestamp("dchangedate").getTime()
                 )
         ).stream().collect(Collectors.toList());
     }

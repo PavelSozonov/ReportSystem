@@ -26,5 +26,5 @@ public class ReportHistory implements Serializable {
     private Integer status;
 
     @NotBlank
-    private String changeDate;
+    private Long changeDate;
 }
