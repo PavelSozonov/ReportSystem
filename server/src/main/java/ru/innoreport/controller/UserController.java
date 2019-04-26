@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/user/{id}")
-    public String deleteFromEntityList(@PathVariable("id") String id) throws Exception {
+    public String deleteFromUserList(@PathVariable("id") String id) throws Exception {
         return userService.deleteFromUserList(id);
     }
 }

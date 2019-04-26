@@ -65,7 +65,7 @@ public class ReportController {
         JSONObject jsonObject = new JSONObject(json);
         String title = jsonObject.get("title").toString();
         String description = jsonObject.get("description").toString();
-        String sender = jsonObject.get("description").toString();
+        String sender = jsonObject.get("sender").toString();
         return reportService.insertIntoReports(title, description, sender);
     }
 
