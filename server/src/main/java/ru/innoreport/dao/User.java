@@ -16,11 +16,14 @@ public class User implements Serializable {
     @Id
     private Long id;
 
+    // Login
     @NotBlank
     private String code;
 
+    // Full user name
     @NotBlank
     private String name;
 
+    // Department
     private String entity;
 }
