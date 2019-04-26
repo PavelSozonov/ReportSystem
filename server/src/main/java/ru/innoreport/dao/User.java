@@ -16,7 +16,7 @@ public class User implements Serializable {
     @Id
     private Long id;
 
-    // Login
+    // User login
     @NotBlank
     private String code;
 
@@ -24,6 +24,6 @@ public class User implements Serializable {
     @NotBlank
     private String name;
 
-    // Department
+    // Department (if NULL then it is simple user, if not NULL then user is admin, can change status and see all reports)
     private String entity;
 }
