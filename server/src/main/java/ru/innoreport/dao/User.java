@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserList implements Serializable {
+public class User implements Serializable {
 
     @Id
     private Long id;

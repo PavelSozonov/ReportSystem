@@ -3,7 +3,7 @@ package ru.innoreport.controller;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.innoreport.dao.UserList;
+import ru.innoreport.dao.User;
 import ru.innoreport.service.UserService;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/user")
-    public List<UserList> getUsersListView() {
+    public List<User> getUsersListView() {
         return userService.getUserListView();
     }
 

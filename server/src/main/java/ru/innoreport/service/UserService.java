@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
-import ru.innoreport.dao.UserList;
+import ru.innoreport.dao.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +17,11 @@ public class UserService {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<UserList> getUserListView() {
+    public List<User> getUserListView() {
 
         return jdbcTemplate.query(
                 "SELECT * FROM v_userlist",
-                (rs, rowNum) -> new UserList(rs.getLong("nid"),
+                (rs, rowNum) -> new User(rs.getLong("nid"),
                         rs.getString("scode"),
                         rs.getString("sname"),
                         rs.getString("sentity")
