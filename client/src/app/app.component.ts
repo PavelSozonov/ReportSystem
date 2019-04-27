@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
 import { AccountService } from './services/account.service';
+import { browser } from './util/browser';
 
 @Component({
   selector: 'app-root',
@@ -45,6 +46,31 @@ export class AppComponent implements OnInit {
         );
         this.iconRegistry.addSvgIconSetInNamespace('avatars', avatarsSafeUrl);
         // this.currentUser = this.auth.currentUser();
+    }
+
+    public get isUserLoggedIn(): boolean {
+        return this.accountService.isUserExists();
+    }
+
+    public get userName(): string {
+        return this.accountService.userName;
+    }
+
+    public logout() {
+        this.accountService.logoff();
+    }
+
+    public get cssClassList() {
+        const res = new Array<string>();
+
+        if (browser.isMobile()) {
+            res.push('app-mobile');
+        }
+        if (browser.isIE()) {
+            res.push('app-ie');
+        }
+
+        return res;
     }
 
   // openAdminDialog() {

@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFlex>
+<div fxLayout="column" fxFlex [ngClass]="cssClassList">
 
     <mat-toolbar color="primary">
         <span class="toolbar-section">
@@ -17,15 +17,21 @@
             <button mat-icon-button [matMenuTriggerFor]="accountMenu">
                 <mat-icon>person_outline</mat-icon>
             </button>
+            <span *ngIf="isUserLoggedIn" class="user">Hello, {{userName}}!</span>
             <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item>
-                    <mat-icon>person_outline</mat-icon>
-                    <span>Login</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Logout</span>
-                </button>
+                <ng-container *ngIf="!isUserLoggedIn; then showLogin; else showLogout"></ng-container>
+                <ng-template #showLogin>
+                    <button mat-menu-item>
+                        <mat-icon>person_outline</mat-icon>
+                        <span>Login</span>
+                    </button>
+                </ng-template>
+                <ng-template #showLogout>
+                    <button mat-menu-item (click)="logout()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </ng-template>
             </mat-menu>
         </span>
     </mat-toolbar>

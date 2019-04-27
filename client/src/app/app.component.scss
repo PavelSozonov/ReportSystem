@@ -13,8 +13,11 @@
             }
             
             .account {
-                position: relative;
-                right: 0;
+                flex: 1 1 1;
+
+                .user {
+                    font-size: 14px;
+                }
             }
         }
 

@@ -10,11 +10,19 @@ export class AccountService {
         this.currentUser = new User(1, 'stef', '123', '123', '');
     }
 
-    public get user(): User {
-        return this.currentUser;
+    public isUserExists(): boolean {
+        return !!this.currentUser;
     }
 
-    public set user(user: User) {
+    public get userName(): string {
+        return this.currentUser.code;
+    }
+
+    public logoff() {
+        this.currentUser = null;
+    }
+
+    public logon(user: User) {
         this.currentUser = user;
     }
 }
