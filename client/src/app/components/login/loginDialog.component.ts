@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpService } from '../../services/http.service';
+import { BaseDialogComponent } from '../shared/dialog/draggableDialog.component';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'app-login-dialog',
@@ -20,7 +22,8 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
     constructor(public dialogRef: MatDialogRef<LoginDialogComponent>,
         private readonly router: Router,
-        private readonly authService: AuthService) { }
+        private readonly authService: AuthService) {
+    }
 
     ngOnInit() {
         console.info('login form');

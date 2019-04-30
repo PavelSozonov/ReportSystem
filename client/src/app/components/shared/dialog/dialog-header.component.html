@@ -1,8 +1,11 @@
-<mat-toolbar color="primary">
+<mat-toolbar cdkDrag
+             cdkDragRootElement=".cdk-overlay-pane"
+             cdkDragHandle
+             color="primary">
     <span class="title-section">{{dialogTitle}}</span>
-    <button class="btn-dialog-close" 
-            mat-stroked-button 
-            (click)="dialogRef.close()" 
+    <button class="btn-dialog-close"
+            mat-stroked-button
+            (click)="dialogRef.close()"
             tabindex="-1">
         <mat-icon>clear</mat-icon>
     </button>
