@@ -1,9 +1,7 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { User } from '../core/user';
+
 import { HttpService } from './http.service';
-import { resolve } from 'url';
-import { MatSnackBar } from '@angular/material';
 import { LoggerService } from './logger.service';
 
 @Injectable({
@@ -24,7 +22,7 @@ export class AuthService {
             if (user.password === password) {
                 this.currentUserName = user.code;
                 this.currentUserEntity = user.entity;
-                localStorage.setItem('ACCESS_TOKEN', 'access_token');
+                localStorage.setItem('currentUser', JSON.stringify(user));
                 this.loggerService.success('User successfully logged in!');
                 return true;
             } else {
@@ -38,7 +36,7 @@ export class AuthService {
     }
 
     public isLoggedIn(): boolean {
-        return localStorage.getItem('ACCESS_TOKEN') !== null;
+        return localStorage.getItem('currentUser') !== null;
     }
 
     public isAdmin(): boolean {
@@ -48,7 +46,7 @@ export class AuthService {
     public logout() {
         this.currentUserName = null;
         this.currentUserEntity = null;
-        localStorage.removeItem('ACCESS_TOKEN');
+        localStorage.removeItem('currentUser');
     }
 
     public get userName(): string {

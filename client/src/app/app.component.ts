@@ -22,12 +22,12 @@ export class AppComponent implements OnInit {
         },
         {
             icon: 'assignment',
-            path: '/post/list',
+            path: '/reports',
             label: 'Reports'
         },
         {
             icon: 'add',
-            path: '/post/new',
+            path: '/reports/new',
             label: 'New report'
         }
     ];
@@ -74,15 +74,6 @@ export class AppComponent implements OnInit {
 
         return res;
     }
-
-  // openAdminDialog() {
-  //   this.dialog.open(DialogComponent).afterClosed()
-  //     .filter(result => !!result)
-  //     .subscribe(user => {
-  //       this.users.push(user);
-  //       this.selectedUser = user;
-  //     });
-  // }
 
     ngOnInit(): void {
         console.log('calling ngOnInit...');

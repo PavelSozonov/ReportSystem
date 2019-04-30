@@ -12,10 +12,12 @@ import { LoginDialogModule } from './components/login/loginDialog.module';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoggerService } from './services/logger.service';
+import { ReportsModule } from './components/reports/reports.module';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'reports', redirectTo: '', canActivate: [AuthGuard] }
+    // { path: 'reports', redirectTo: '/reports', canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -27,6 +29,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         HttpClientModule,
         HomeModule,
+        ReportsModule,
         LoginDialogModule
     ],
     entryComponents: [],
