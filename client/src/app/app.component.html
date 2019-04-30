@@ -21,7 +21,7 @@
             <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
                 <ng-container *ngIf="!isUserLoggedIn; then showLogin; else showLogout"></ng-container>
                 <ng-template #showLogin>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="openLoginDialog()">
                         <mat-icon>person_outline</mat-icon>
                         <span>Login</span>
                     </button>

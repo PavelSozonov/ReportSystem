@@ -9,3 +9,19 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
+
+.mat-dialog-container {
+    padding-top: 0 !important;
+}
+
+.mat-simple-snackbar span {
+    margin: auto;
+}
+
+.logger-success {
+    color: yellowgreen !important;
+}
+
+.logger-error {
+    color: crimson !important;
+}

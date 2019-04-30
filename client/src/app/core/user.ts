@@ -1,9 +1,7 @@
-export class User {
-    constructor(
-        public id: number,
-        public code: string,
-        public name: string,
-        public password: string,
-        public entity: string
-    ) {}
+export interface User {
+    id: number;
+    code: string;
+    name: string;
+    password: string;
+    entity?: string;
 }

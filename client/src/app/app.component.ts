@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
-import { AccountService } from './services/account.service';
+import { AuthService } from './services/auth.service';
 import { browser } from './util/browser';
+import { LoginDialogComponent } from './components/login/loginDialog.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { browser } from './util/browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    links = [
+    private links = [
         {
             icon: 'home',
             path: '',
@@ -30,34 +31,35 @@ export class AppComponent implements OnInit {
             label: 'New report'
         }
     ];
-
-    isDarkTheme = false;
-    showAuthed = false;
   // currentUser: Observable<User>;
 
     constructor(
-        private iconRegistry: MatIconRegistry,
-        private sanitizer: DomSanitizer,
-        private readonly accountService: AccountService
-    ) {
-    // To avoid XSS attacks, the URL needs to be trusted from inside of your application.
-        const avatarsSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            './assets/avatars.svg'
-        );
-        this.iconRegistry.addSvgIconSetInNamespace('avatars', avatarsSafeUrl);
-        // this.currentUser = this.auth.currentUser();
-    }
+        private readonly authService: AuthService,
+        public loginDialog: MatDialog
+    ) {}
+
+    private openLoginDialog(): void {
+        const dialogRef = this.loginDialog.open(LoginDialogComponent, {
+          width: '300px',
+          // data: {name: this.name, pass: this.password}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+          // this.user = result;
+        });
+      }
 
     public get isUserLoggedIn(): boolean {
-        return this.accountService.isUserExists();
+        return this.authService.isLoggedIn();
     }
 
     public get userName(): string {
-        return this.accountService.userName;
+        return this.authService.userName;
     }
 
     public logout() {
-        this.accountService.logoff();
+        this.authService.logout();
     }
 
     public get cssClassList() {
@@ -84,10 +86,5 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         console.log('calling ngOnInit...');
-        // this.auth.verifyAuth();
-    }
-
-    signout() {
-        // this.auth.signout();
     }
 }
