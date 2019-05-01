@@ -11,7 +11,7 @@ export class LoggerService {
     constructor(private readonly snackBar: MatSnackBar) {
         this.matSnackBarConfig = new MatSnackBarConfig();
         this.matSnackBarConfig.duration = 2000;
-        this.matSnackBarConfig.horizontalPosition = 'start';
+        this.matSnackBarConfig.horizontalPosition = 'center';
         this.matSnackBarConfig.verticalPosition = 'bottom';
     }
 
