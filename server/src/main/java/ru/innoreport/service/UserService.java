@@ -19,7 +19,7 @@ public class UserService {
 
 
     public User getUserView(String username) {
-        return user = (User)jdbcTemplate.query(
+        return (User)jdbcTemplate.query(
             "SELECT * FROM v_userlist WHERE scode = '" + username + "';",
             (rs, rowNum) -> new User(rs.getLong("nid"),
                     rs.getString("scode"),
@@ -37,7 +37,8 @@ public class UserService {
                 (rs, rowNum) -> new User(rs.getLong("nid"),
                         rs.getString("scode"),
                         rs.getString("sname"),
-                        rs.getString("sentity")
+                        rs.getString("sentity"),
+                        rs.getString("spassword")
                 )
         ).stream().collect(Collectors.toList());
     }

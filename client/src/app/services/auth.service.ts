@@ -18,7 +18,7 @@ export class AuthService {
 
     public async login(username: string, password: string): Promise<boolean> {
         try {
-            const user = await this.httpService.getUser(username, password);
+            const user = await this.httpService.getUser(username);
             if (user.password === password) {
                 this.currentUserName = user.code;
                 this.currentUserEntity = user.entity;
@@ -43,7 +43,7 @@ export class AuthService {
         return this.currentUserEntity !== null;
     }
 
-    public logout() {
+    public logout(): void {
         this.currentUserName = null;
         this.currentUserEntity = null;
         localStorage.removeItem('currentUser');

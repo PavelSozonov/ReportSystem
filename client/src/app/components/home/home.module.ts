@@ -13,6 +13,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         MaterialModule
     ],
-    declarations: [HomeComponent]
+    declarations: [HomeComponent],
+    bootstrap: [HomeComponent]
 })
 export class HomeModule { }

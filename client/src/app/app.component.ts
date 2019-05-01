@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { MatIconRegistry, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { browser } from './util/browser';
 import { LoginDialogComponent } from './components/login/loginDialog.component';
@@ -14,7 +13,7 @@ import { LoginDialogComponent } from './components/login/loginDialog.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    private links = [
+    private readonly links = [
         {
             icon: 'home',
             path: '',
@@ -31,22 +30,20 @@ export class AppComponent implements OnInit {
             label: 'New report'
         }
     ];
-  // currentUser: Observable<User>;
 
     constructor(
         private readonly authService: AuthService,
-        public loginDialog: MatDialog
-    ) {}
+        public loginDialog: MatDialog) {
+            authService.logout(); // TODO: add checkbox into dialog
+        }
 
     private openLoginDialog(): void {
         const dialogRef = this.loginDialog.open(LoginDialogComponent, {
-          width: '300px',
-          // data: {name: this.name, pass: this.password}
+            width: '300px',
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-          // this.user = result;
+            console.log('The dialog was closed');
         });
       }
 
@@ -58,11 +55,11 @@ export class AppComponent implements OnInit {
         return this.authService.userName;
     }
 
-    public logout() {
+    public logout(): void {
         this.authService.logout();
     }
 
-    public get cssClassList() {
+    public get cssClassList(): string[] {
         const res = new Array<string>();
 
         if (browser.isMobile()) {
@@ -75,7 +72,7 @@ export class AppComponent implements OnInit {
         return res;
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         console.log('calling ngOnInit...');
     }
 }

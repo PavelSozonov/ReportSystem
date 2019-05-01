@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+
 import { DialogHeaderComponent } from './dialogHeader.component';
 import { MaterialModule } from '../material.module';
-import { MatDialogRef } from '@angular/material/dialog';
 import { DialogFooterComponent } from './dialogFooter.component';
 
 @NgModule({

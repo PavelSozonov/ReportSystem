@@ -13,8 +13,7 @@ export class AuthGuard implements CanActivate {
         private readonly loggerService: LoggerService,
         private readonly router: Router) {}
 
-    canActivate(
-        next: ActivatedRouteSnapshot,
+    canActivate(next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/home']);

@@ -14,6 +14,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         MaterialModule
     ],
-    declarations: [ReportsComponent]
+    declarations: [ReportsComponent],
+    bootstrap: [ReportsComponent]
 })
 export class ReportsModule { }

@@ -22,11 +22,11 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
         private readonly authService: AuthService) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         console.info('login form');
     }
 
-    public validateUser() {
+    public validateUser(): void {
         this.authService.login(this.username, this.password).then(isLogin => {
             if (isLogin) {
                 this.dialogRef.close();

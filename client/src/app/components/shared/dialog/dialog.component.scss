@@ -2,9 +2,11 @@ mat-toolbar {
     width: auto;
     margin-right: -24px;
     margin-left: -24px;
+
     .title-section {
         flex: 1 1 auto;
     }
+
     .btn-dialog-close {
         width: 45px;
         min-width: 0px !important;
