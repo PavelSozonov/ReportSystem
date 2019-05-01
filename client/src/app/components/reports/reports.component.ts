@@ -1,8 +1,10 @@
 import * as _ from 'lodash';
+import { List } from 'lodash';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { Report, ReportView } from '../../core/report';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { ReportDialogComponent } from './reportDialog/reportDialog.component';
 
 @Component({
     selector: 'app-reports',
@@ -15,12 +17,16 @@ export class ReportsComponent implements OnInit {
 
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private readonly reportService: ReportService) {}
+    private reports: List<Report>;
+
+    constructor(private readonly reportService: ReportService,
+        public reportDialog: MatDialog) {}
 
     ngOnInit(): void {
         console.log('ReportsComponent was loaded');
 
         this.reportService.getReports().then(reports => {
+            this.reports = reports;
             const reportsToView = _.map(reports, report => {
                 return Report.toView(report);
             });
@@ -33,6 +39,15 @@ export class ReportsComponent implements OnInit {
 
     private selectRow(row: ReportView): void {
         console.log(row);
+
+        const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+            width: '300px',
+        });
+        console.log('LoginDialogComponent was opened');
+
+        dialogRef.afterClosed().subscribe(() => {
+            console.log('LoginDialogComponent was closed');
+        });
     }
 
     get message(): string {
