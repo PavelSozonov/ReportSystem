@@ -28,5 +28,5 @@ public class User implements Serializable {
     private String entity;
 
 
-    //private String password;
+    private String password;
 }
