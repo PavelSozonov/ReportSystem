@@ -1,5 +1,6 @@
 package ru.innoreport.controller;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +12,21 @@ import ru.innoreport.service.ReportService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 public class ReportController {
 
     @Autowired
     ReportService reportService;
 
-    @GetMapping("/report")
-    public List<Report> getReportsView() {
-        return reportService.getReportsView();
+    @GetMapping("/reports/{username}")
+    public List<Report> getReportsView(@PathVariable("username") String username) {
+        return reportService.getReportsView(username, null);
     }
 
-    @GetMapping("/report/{id}")
-    public Report getReport(@PathVariable("id") Long id) {
-        return reportService.getReport(id);
+    @GetMapping("/reports/{username}/{entity}")
+    public List<Report> getReportsView(@PathVariable("username") String username,
+        @PathVariable("entity") String entity) {
+        return reportService.getReportsView(username, entity);
     }
 
     @GetMapping("/report/history")

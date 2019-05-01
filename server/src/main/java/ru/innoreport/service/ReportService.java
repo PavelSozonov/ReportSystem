@@ -13,25 +13,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("javadoc")
 @Component
 public class ReportService {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Report> getReportsView() {
+    public List<Report> getReportsView(String username, String entity) {
+        String queryString = "SELECT * FROM v_reports WHERE ssender = '" + username + "'";
+        queryString = entity != null
+            ? queryString + " OR srecipient = '" + entity + "'"
+            : queryString;
 
-        return jdbcTemplate.query(
-                "SELECT * FROM v_reports",
-                (rs, rowNum) -> new Report(rs.getLong("nid"),
-                        rs.getString("stitle"),
-                        rs.getString("sdescription"),
-                        rs.getString("ssender"),
-                        rs.getString("srecipient"),
-                        rs.getInt("nstatus"),
-                        rs.getTimestamp("dchangedate").getTime(),
-                        rs.getString("snumber")
-                )
+        return (List<Report>)jdbcTemplate.query(
+            queryString, (rs, rowNum) -> new Report(rs.getLong("nid"),
+                rs.getString("stitle"),
+                rs.getString("sdescription"),
+                rs.getString("ssender"),
+                rs.getString("srecipient"),
+                rs.getInt("nstatus"),
+                rs.getTimestamp("dchangedate").getTime(),
+                rs.getString("snumber")
+            )
         ).stream().collect(Collectors.toList());
     }
 

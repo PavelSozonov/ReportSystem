@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("javadoc")
 @Component
 public class UserService {
 
@@ -22,10 +23,10 @@ public class UserService {
         return (User)jdbcTemplate.query(
             "SELECT * FROM v_userlist WHERE scode = '" + username + "';",
             (rs, rowNum) -> new User(rs.getLong("nid"),
-                    rs.getString("scode"),
-                    rs.getString("sname"),
-                    rs.getString("sentity"),
-                    rs.getString("spassword")
+                rs.getString("scode"),
+                rs.getString("sname"),
+                rs.getString("sentity"),
+                rs.getString("spassword")
             )
         ).stream().collect(Collectors.toList()).get(0);
     }
@@ -35,10 +36,10 @@ public class UserService {
         return jdbcTemplate.query(
                 "SELECT * FROM v_userlist",
                 (rs, rowNum) -> new User(rs.getLong("nid"),
-                        rs.getString("scode"),
-                        rs.getString("sname"),
-                        rs.getString("sentity"),
-                        rs.getString("spassword")
+                    rs.getString("scode"),
+                    rs.getString("sname"),
+                    rs.getString("sentity"),
+                    rs.getString("spassword")
                 )
         ).stream().collect(Collectors.toList());
     }

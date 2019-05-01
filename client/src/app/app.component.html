@@ -26,7 +26,7 @@
                     </button>
                 </ng-template>
                 <ng-template #showLogout>
-                    <button mat-menu-item (click)="logout()">
+                    <button mat-menu-item (click)="logout()" [routerLink]="'/home'">
                         <mat-icon>exit_to_app</mat-icon>
                         <span>Logout</span>
                     </button>

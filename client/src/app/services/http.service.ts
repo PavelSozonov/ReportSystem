@@ -22,12 +22,9 @@ export class HttpService {
     }
 
     public getReports(username: string, entity?: string): Promise<List<Report>> {
-        const params = new HttpParams();
-        if (entity) {
-            params.append('entity', entity);
-        }
-        return <Promise<List<Report>>>this.http.get(`${this.baseUrl}/reports/${username}`, {
-            headers: this.headers, params: params
+
+        return <Promise<List<Report>>>this.http.get(`${this.baseUrl}/reports/${username}/${entity}`, {
+            headers: this.headers
         }).toPromise();
     }
 }

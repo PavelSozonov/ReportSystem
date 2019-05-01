@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.innoreport.service.EntityService;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 public class EntityController {
 
     @Autowired

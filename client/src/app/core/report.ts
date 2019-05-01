@@ -1,3 +1,9 @@
+export interface ReportView {
+    number: string;
+    title: string;
+    status: string;
+}
+
 export class Report {
     constructor(
         public id: number,
@@ -9,13 +15,17 @@ export class Report {
         public changeDate: number, // TODO: change to timestamp
         public number: string
     ) {}
+
+    public static toView(report: Report): ReportView {
+        return {number: report.number, title: report.title, status: report.status.valueOf()};
+    }
 }
 
 export enum Status {
-    NEW,
-    SENT,
-    RECEIVED,
-    IN_PROGRESS,
-    SOLVED,
-    DECLINED
+    NEW = 'New',
+    SENT = 'Sent',
+    RECEIVED = 'Received',
+    IN_PROGRESS = 'In progress',
+    SOLVED = 'Solved',
+    DECLINED = 'Declined'
 }

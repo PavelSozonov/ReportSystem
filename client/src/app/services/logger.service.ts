@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoggerService {
-    private matSnackBarConfig: MatSnackBarConfig;
+    public matSnackBarConfig: MatSnackBarConfig;
 
-    constructor(private readonly snackBar: MatSnackBar) {
+    constructor(public readonly snackBar: MatSnackBar,
+        private zone: NgZone) {
         this.matSnackBarConfig = new MatSnackBarConfig();
         this.matSnackBarConfig.duration = 2000;
         this.matSnackBarConfig.horizontalPosition = 'center';
@@ -16,13 +17,19 @@ export class LoggerService {
 
     public success(message: string): void {
         this.matSnackBarConfig.panelClass = ['logger-success'];
-        this.snackBar.open(message, null, this.matSnackBarConfig);
+        this.openSnackBar(message);
         console.info(message);
     }
 
     public error(message: string): void {
         this.matSnackBarConfig.panelClass = ['logger-error'];
-        this.snackBar.open(message, null, this.matSnackBarConfig);
+        this.openSnackBar(message);
         console.warn(message);
+    }
+
+    private openSnackBar(message: string): void {
+        this.zone.run(() => {
+            this.snackBar.open(message, null, this.matSnackBarConfig);
+        });
     }
 }
