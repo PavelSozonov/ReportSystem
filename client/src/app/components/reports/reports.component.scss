@@ -2,32 +2,35 @@
     mat-card {
         margin: 5%;
         width: 45%;
-        float: left;
 
         &.description {
             float: right;
         }
     }
 
-    table {
+    .report-list {
         width: 90%;
         margin: 5%;
 
-        mat-header-row {
-            cursor: pointer;
-        }
+        table {
+            width: 100%;
 
-        .mat-sort-header-sorted {
-            color: black;
-            font-size: large;
-        }
+            mat-header-row {
+                cursor: pointer;
+            }
 
-        mat-row.report-row {
-            position: relative;
-            cursor: pointer;
-    
-            &:hover {
-                background: #f5f5f5;
+            .mat-sort-header-sorted {
+                color: black;
+                font-size: large;
+            }
+
+            mat-row.report-row {
+                position: relative;
+                cursor: pointer;
+
+                &:hover {
+                    background: #f5f5f5;
+                }
             }
         }
     }
