@@ -19,6 +19,6 @@ export class DialogFooterComponent implements OnInit {
     constructor(public dialogRef: MatDialogRef<DialogFooterComponent>) { }
 
     ngOnInit(): void {
-        console.info('dialog footer');
+        console.log('DialogFooterComponent was loaded');
     }
 }

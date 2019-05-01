@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpService } from './http.service';
 import { LoggerService } from './logger.service';
+import { User } from '../core/user';
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +38,14 @@ export class AuthService {
 
     public isLoggedIn(): boolean {
         return localStorage.getItem('currentUser') !== null;
+    }
+
+    public loadUser(): void {
+        const userInfo: User = JSON.parse(localStorage.getItem('currentUser'));
+        if (userInfo) {
+            this.currentUserName = userInfo.code;
+            this.currentUserEntity = userInfo.entity;
+        }
     }
 
     public isAdmin(): boolean {

@@ -34,16 +34,17 @@ export class AppComponent implements OnInit {
     constructor(
         private readonly authService: AuthService,
         public loginDialog: MatDialog) {
-            authService.logout(); // TODO: add checkbox into dialog
+            this.authService.loadUser();
         }
 
     private openLoginDialog(): void {
         const dialogRef = this.loginDialog.open(LoginDialogComponent, {
             width: '300px',
         });
+        console.log('LoginDialogComponent was opened');
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+        dialogRef.afterClosed().subscribe(() => {
+            console.log('LoginDialogComponent was closed');
         });
       }
 
@@ -73,6 +74,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('calling ngOnInit...');
+        console.log('AppComponent was loaded');
     }
 }

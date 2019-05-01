@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
     templateUrl: 'loginDialog.component.html',
     styleUrls: ['loginDialog.component.scss']
 })
-export class LoginDialogComponent implements OnInit, OnDestroy {
+export class LoginDialogComponent {
 
     private username: string;
     private password: string;
@@ -22,10 +22,6 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
         private readonly authService: AuthService) {
     }
 
-    ngOnInit(): void {
-        console.info('login form');
-    }
-
     public validateUser(): void {
         this.authService.login(this.username, this.password).then(isLogin => {
             if (isLogin) {
@@ -35,11 +31,5 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
                 this.password = '';
             }
         });
-    }
-
-    ngOnDestroy(): void {
-        // Called once, before the instance is destroyed.
-        // Add 'implements OnDestroy' to the class.
-        console.info('whaaaaaaaaaaaaat');
     }
 }

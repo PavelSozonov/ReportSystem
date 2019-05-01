@@ -10,7 +10,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
     styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-    private displayedColumns: string[] = ['report_number', 'title', 'status'];
+    private displayedColumns: string[] = ['number', 'title', 'status'];
     private dataSource: MatTableDataSource<ReportView>;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -18,6 +18,8 @@ export class ReportsComponent implements OnInit {
     constructor(private readonly reportService: ReportService) {}
 
     ngOnInit(): void {
+        console.log('ReportsComponent was loaded');
+
         this.reportService.getReports().then(reports => {
             const reportsToView = _.map(reports, report => {
                 return Report.toView(report);
@@ -27,6 +29,10 @@ export class ReportsComponent implements OnInit {
         }).catch(err => {
             console.error(err);
         });
+    }
+
+    private selectRow(row: ReportView): void {
+        console.log(row);
     }
 
     get message(): string {

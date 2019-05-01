@@ -1,9 +1,7 @@
 :host {
     mat-card {
-        margin-top: 5%;
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 60%;
+        margin: 5%;
+        width: 45%;
         float: left;
 
         &.description {
@@ -12,10 +10,25 @@
     }
 
     table {
-        width: 100%;
-    }
+        width: 90%;
+        margin: 5%;
 
-    th.mat-sort-header-sorted {
-        color: black;
+        mat-header-row {
+            cursor: pointer;
+        }
+
+        .mat-sort-header-sorted {
+            color: black;
+            font-size: large;
+        }
+
+        mat-row.report-row {
+            position: relative;
+            cursor: pointer;
+    
+            &:hover {
+                background: #f5f5f5;
+            }
+        }
     }
 }

@@ -17,15 +17,15 @@ export class Report {
     ) {}
 
     public static toView(report: Report): ReportView {
-        return {number: report.number, title: report.title, status: report.status.valueOf()};
+        return {number: report.number, title: report.title, status: Status[report.status]};
     }
 }
 
 export enum Status {
-    NEW = 'New',
-    SENT = 'Sent',
-    RECEIVED = 'Received',
-    IN_PROGRESS = 'In progress',
-    SOLVED = 'Solved',
-    DECLINED = 'Declined'
+    'New',
+    'Sent',
+    'Received',
+    'In progress',
+    'Solved',
+    'Declined'
 }

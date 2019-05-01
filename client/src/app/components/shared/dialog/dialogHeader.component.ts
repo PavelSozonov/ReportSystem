@@ -13,6 +13,6 @@ export class DialogHeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.info('dialog header');
+        console.log('DialogHeaderComponent was loaded');
     }
 }
