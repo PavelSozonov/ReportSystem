@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { ReportDialogComponent } from './reportDialog.component';
 import { MaterialModule } from '../../shared/material.module';
 import { DialogModule } from '../../shared/dialog/dialog.module';
-import { LoggerService } from '../../../services/logger.service';
+import { ReportService } from '../../../services/report.service';
 
 
 @NgModule({
     declarations: [ReportDialogComponent],
     imports: [
-        ReactiveFormsModule,
         FormsModule,
         MaterialModule,
         DialogModule
@@ -19,7 +18,7 @@ import { LoggerService } from '../../../services/logger.service';
     bootstrap: [ReportDialogComponent],
     providers: [
         {provide: MatDialogRef, useValue: {}},
-        LoggerService
+        ReportService
     ]
 })
 export class ReportDialogModule {}

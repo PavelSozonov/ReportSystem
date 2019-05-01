@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
     constructor() {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log('HomeComponent was loaded');
+    }
 
     get message(): string {
         return 'Hello everyone! Today we are presenting our application called \'InnoReportSystem\'!';
