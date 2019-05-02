@@ -3,21 +3,46 @@
     <div mat-dialog-content>
         <mat-form-field>
             <input matInput 
-                   [(ngModel)]="username" 
-                   name="username" 
-                   placeholder="Username" 
-                   minlength="5" 
-                   maxlength="20" 
-                   autocomplete="off" 
-                   required />
+                   [(ngModel)]="report.number"
+                   name="number"
+                   placeholder="Number"
+                   [disabled]="true" />
         </mat-form-field>
         <mat-form-field>
             <input matInput 
-               [(ngModel)]="password" 
-               name="password" 
-               placeholder="Enter your password" 
-               minlength="5" 
-               maxlength="20" 
+               [(ngModel)]="report.title"
+               name="title"
+               placeholder="Title"
+               minlength="5"
+               maxlength="20"
+               [disabled]="!isCreate"
+               required />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput 
+               [(ngModel)]="report.description"
+               name="description"
+               placeholder="Description..."
+               minlength="5"
+               maxlength="600"
+               [disabled]="!isCreate" />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput 
+               [(ngModel)]="report.recipient"
+               name="recipient"
+               placeholder="Recipient"
+               minlength="5"
+               maxlength="20"
+               [disabled]="!isCreate"
+               required />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput 
+               [(ngModel)]="report.status"
+               name="status"
+               placeholder="Status"
+               [disabled]="isCreate && !canEdit"
                required />
         </mat-form-field>
     </div>
