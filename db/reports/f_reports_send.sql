@@ -17,7 +17,8 @@ $BODY$
 		select id from entitylist into nentity 
 			where code = sentity;		
 		update reports
-			set recipient = nentity;
+			set recipient = nentity
+		    where id = nid;
 		perform f_reports_changestatus(nid, nstatus);
 	END;
 $BODY$
