@@ -6,16 +6,66 @@ import org.springframework.web.bind.annotation.*;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.dao.ReportTags;
+import ru.innoreport.service.ClassificationService;
 import ru.innoreport.service.ReportService;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.StringReader;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ReportController {
 
     @Autowired
     ReportService reportService;
+
+    @Autowired
+    ClassificationService classificationService;
+
+    @PostMapping(path = "/reports", consumes = "application/json")
+    public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
+        final JsonObject jsonObject = getJsonObject(json);
+
+        final String title = removeQuotes(jsonObject.get("title").toString());
+        final String description = removeQuotes(jsonObject.get("description").toString());
+        final String sender = removeQuotes(jsonObject.get("sender").toString());
+        final List<String> tags = jsonObject
+                .getJsonArray("tags")
+                .stream()
+                .map(x -> removeQuotes(x.toString()))
+                .collect(Collectors.toList());
+
+        // Create report
+        final String reportId = reportService.insertIntoReports(title, description, sender);
+
+        // Set tags
+        tags.stream().forEach(t -> reportService.insertReportTags(reportId, t));
+
+        // Set entity
+        classificationService.setEntityCode(reportId);
+
+        return reportId;
+    }
+
+    private JsonObject getJsonObject(@RequestBody(required = true) String json) {
+        JsonObject jsonObject;
+        try (JsonReader jsonReader = Json.createReader(new StringReader(json))) {
+            jsonObject = jsonReader.readObject();
+        }
+        return jsonObject;
+    }
+
+    @PostMapping(path = "/reports/tags", consumes = "application/json")
+    public String insertReportTags(@RequestBody(required = true) String json) throws Exception {
+        JSONObject jsonObject = new JSONObject(json);
+        String reportId = jsonObject.get("report").toString();
+        String tag = jsonObject.get("tag").toString();
+        return reportService.insertReportTags(reportId, tag);
+    }
 
     @GetMapping(path = "/tags")
     public List<String> getAllTags() {
@@ -34,7 +84,7 @@ public class ReportController {
 
     @GetMapping("/reports/{username}/{entity}")
     public List<Report> getReportsView(@PathVariable("username") String username,
-        @PathVariable("entity") String entity) {
+                                       @PathVariable("entity") String entity) {
         return reportService.getReportsView(username, entity);
     }
 
@@ -56,29 +106,12 @@ public class ReportController {
         return reportService.insertIntoTagList(code, name);
     }
 
-    @PostMapping(path = "/report/tag", consumes = "application/json")
-    public String insertReportTags(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
-        String report = jsonObject.get("report").toString();
-        String tag = jsonObject.get("tag").toString();
-        return reportService.insertReportTags(report, tag);
-    }
-
     @PostMapping(path = "/report/status", consumes = "application/json")
     public String sendReportStatus(@RequestBody(required = true) String json) throws Exception {
         JSONObject jsonObject = new JSONObject(json);
         String id = jsonObject.get("id").toString();
         String entity = jsonObject.get("entity").toString();
         return reportService.sendReportStatus(id, entity);
-    }
-
-    @PostMapping(path = "/report", consumes = "application/json")
-    public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
-        String title = jsonObject.get("title").toString();
-        String description = jsonObject.get("description").toString();
-        String sender = jsonObject.get("sender").toString();
-        return reportService.insertIntoReports(title, description, sender);
     }
 
     @PutMapping(path = "/report/status", consumes = "application/json")
@@ -96,5 +129,9 @@ public class ReportController {
         String status = jsonObject.get("changeDate").toString();
         String changeDate = jsonObject.get("changeDate").toString();
         return reportService.insertIntoReportHistory(report, status, changeDate);
+    }
+
+    private String removeQuotes(String value) {
+        return value.substring(1, value.length() - 1);
     }
 }

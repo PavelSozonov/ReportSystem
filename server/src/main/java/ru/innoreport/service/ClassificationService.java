@@ -5,8 +5,8 @@ public interface ClassificationService {
     /**
      * Set entity code for report
      *
-     * @param reportId id of report for which should be set entity code
+     * @param id identifier of report for which should be set entity code
      * @return entity code that was set
      */
-    String setEntityCode(Long reportId);
+    String setEntityCode(String id);
 }

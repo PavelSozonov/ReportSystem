@@ -1,4 +1,4 @@
-package ru.innoreport;
+package ru.innoreport.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

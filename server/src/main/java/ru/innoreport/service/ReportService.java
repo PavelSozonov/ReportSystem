@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.dao.ReportTags;
+import ru.innoreport.dao.TagEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -122,10 +123,10 @@ public class ReportService {
         return result.get("returnvalue").toString();
     }
 
-    public String insertReportTags(String report, String tag) {
+    public String insertReportTags(String reportId, String tag) {
         final SimpleJdbcCall insertReportTags = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reporttags_insert");
         final Map<String, Object> params = new HashMap<>();
-        params.put("nreport", report);
+        params.put("nreport", Long.parseLong(reportId));
         params.put("stag", tag);
 
         final Map<String, Object> result = insertReportTags.execute(params);
@@ -150,8 +151,17 @@ public class ReportService {
         ).stream().collect(Collectors.toList());
     }
 
+    public List<TagEntity> getTagsEntitiesForReport(String id) {
+        String queryString = "SELECT scode,sentity FROM v_reporttags WHERE nreport = '" + id + "'";
+
+        return (List<TagEntity>)jdbcTemplate.query(
+                queryString, (rs, rowNum) -> new TagEntity(rs.getString("scode"),
+                        rs.getString("sentity"))
+        ).stream().collect(Collectors.toList());
+    }
+
     public List<String> getAllTags() {
-        String queryString = "SELECT scode FROM v_taglist";
+        String queryString = "SELECT scode,sentity FROM v_taglist";
 
         return (List<String>)jdbcTemplate.query(
                 queryString, (rs, rowNum) -> new String(rs.getString("scode"))
