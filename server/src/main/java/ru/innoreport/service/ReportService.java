@@ -141,4 +141,20 @@ public class ReportService {
         final Map<String, Object> result = insertIntoTagList.execute(params);
         return result.get("returnvalue").toString();
     }
+
+    public List<String> getTagsForReport(String id) {
+        String queryString = "SELECT scode FROM v_reporttags WHERE nreport = '" + id + "'";
+
+        return (List<String>)jdbcTemplate.query(
+                queryString, (rs, rowNum) -> new String(rs.getString("scode"))
+        ).stream().collect(Collectors.toList());
+    }
+
+    public List<String> getAllTags() {
+        String queryString = "SELECT scode FROM v_taglist";
+
+        return (List<String>)jdbcTemplate.query(
+                queryString, (rs, rowNum) -> new String(rs.getString("scode"))
+        ).stream().collect(Collectors.toList());
+    }
 }
