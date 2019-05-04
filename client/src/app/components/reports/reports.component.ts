@@ -7,6 +7,7 @@ import { ReportService } from '../../services/report.service';
 import { Report, ReportView } from '../../core/report';
 import { ReportDialogComponent, ReportDialogData } from './reportDialog/reportDialog.component';
 import { AuthService } from '../../services/auth.service';
+import { browser } from '../../util/browser';
 
 @Component({
     selector: 'app-reports',
@@ -14,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-    private displayedColumns: string[] = ['number', 'title', 'status'];
+    private displayedColumns: string[] = this.getColumns();
     private dataSource: MatTableDataSource<ReportView>;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -59,6 +60,19 @@ export class ReportsComponent implements OnInit {
         dialogRef.afterClosed().subscribe(() => {
             console.log('LoginDialogComponent was closed');
         });
+    }
+
+    private getColumns(): string[] {
+        const baseColumns = [];
+        if (!browser.isMobile()) {
+            baseColumns.push('number');
+        }
+        baseColumns.push(
+            'title',
+            'status',
+            this.authService.isAdmin() === true ? 'sender' : 'recipient'
+        );
+        return baseColumns;
     }
 
     get message(): string {

@@ -21,6 +21,18 @@
             <mat-cell *matCellDef="let report"> {{report.title}} </mat-cell>
         </ng-container>
 
+        <!-- Sender Column -->
+        <ng-container matColumnDef="sender">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Sender </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{report.sender}} </mat-cell>
+        </ng-container>
+
+        <!-- Sender Column -->
+        <ng-container matColumnDef="recipient">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Recipient </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{report.recipient}} </mat-cell>
+        </ng-container>
+
         <!-- Status Column -->
         <ng-container matColumnDef="status">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>

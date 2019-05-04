@@ -1,9 +1,3 @@
-export interface ReportView {
-    number: string;
-    title: string;
-    status: string;
-}
-
 export class Report {
     constructor(
         public id: number,
@@ -12,14 +6,37 @@ export class Report {
         public sender: string,
         public recipient: string,
         public status: Status,
-        public changeDate: number, // TODO: change to timestamp
+        private _changeDate: number,
         public number: string
     ) {}
 
+    public get changeDate(): Date {
+       return new Date(this._changeDate);
+    }
+
+    public get changeDataString(): string {
+        return this.changeDate.toUTCString();
+    }
+
     public static toView(report: Report): ReportView {
-        return {number: report.number, title: report.title, status: Status[report.status]};
+        return {
+            number: report.number,
+            title: report.title,
+            status: Status[report.status],
+            recipient: report.recipient,
+            sender: report.sender
+        };
     }
 }
+
+export interface ReportView {
+    number: string;
+    title: string;
+    status: string;
+    recipient: string;
+    sender: string;
+}
+
 
 export enum Status {
     'New',
