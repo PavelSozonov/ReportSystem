@@ -1,8 +1,8 @@
-﻿-- Function: f_reports_sent(numeric, character varying)
+﻿-- Function: f_reports_send(numeric, character varying)
 
--- DROP FUNCTION f_reports_sent(numeric, character varying);
+-- DROP FUNCTION f_reports_send(numeric, character varying);
 
-CREATE OR REPLACE FUNCTION f_reports_sent(
+CREATE OR REPLACE FUNCTION f_reports_send(
     nid numeric,
     sentity character varying)
   RETURNS void AS
@@ -23,5 +23,5 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql;
   
-ALTER FUNCTION f_reports_sent(numeric, character varying)
+ALTER FUNCTION f_reports_send(numeric, character varying)
   OWNER TO innoreport;
