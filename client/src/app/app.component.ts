@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
     private openLoginDialog(): void {
         const dialogRef = this.loginDialog.open(LoginDialogComponent, {
-            width: '300px',
+            width: '300px'
         });
         console.log('LoginDialogComponent was opened');
 
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     }
 
     public get userRole(): string {
-        return this.authService.userEntity ? this.authService.userEntity : 'Citizen';
+        return this.authService.userEntity || 'Citizen';
     }
 
     public logout(): void {

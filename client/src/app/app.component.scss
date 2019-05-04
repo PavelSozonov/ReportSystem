@@ -19,7 +19,7 @@
             .account {
                 .user {
                     font-size: 14px;
-                    margin-right: 25px;
+                    margin-right: 35px;
                     display: inline-block;
                     text-align: right;
 
@@ -30,6 +30,9 @@
 
                 button {
                     position: absolute;
+                    margin-top: 10px;
+                    margin-right: 10px;
+                    margin-left: 0;
                     right: 0;
                     top: 0;
                 }
