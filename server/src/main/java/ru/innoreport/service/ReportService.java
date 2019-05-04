@@ -113,7 +113,7 @@ public class ReportService {
     }
 
     public String sendReportStatus(String id, String entity) {
-        final SimpleJdbcCall sentReportsStatus = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_sent");
+        final SimpleJdbcCall sentReportsStatus = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_send");
         final Map<String, Object> params = new HashMap<>();
         params.put("nid", id);
         params.put("sentity", entity);
