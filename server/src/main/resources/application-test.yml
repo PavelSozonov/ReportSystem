@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://10.90.138.198:5432/test
+    username: innoreport
+    password: innoreport
+    driverClassName: org.postgresql.Driver
+logging:
+  level:
+    ru.innoreport: DEBUG
+    org.springframework.web: DEBUG
