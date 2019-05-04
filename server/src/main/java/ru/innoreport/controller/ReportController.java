@@ -1,6 +1,5 @@
 package ru.innoreport.controller;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,16 @@ public class ReportController {
 
     @Autowired
     ReportService reportService;
+
+    @GetMapping(path = "/tags")
+    public List<String> getAllTags() {
+        return reportService.getAllTags();
+    }
+
+    @GetMapping(path = "/reports/{id}/tags")
+    public List<String> getTagsForReport(@PathVariable("id") String id) {
+        return reportService.getTagsForReport(id);
+    }
 
     @GetMapping("/reports/{username}")
     public List<Report> getReportsView(@PathVariable("username") String username) {
@@ -87,4 +96,5 @@ public class ReportController {
         String status = jsonObject.get("changeDate").toString();
         String changeDate = jsonObject.get("changeDate").toString();
         return reportService.insertIntoReportHistory(report, status, changeDate);
-    }}
+    }
+}
