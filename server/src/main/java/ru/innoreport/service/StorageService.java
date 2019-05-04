@@ -16,5 +16,5 @@ public interface StorageService {
      * @param id identifier of the file
      * @return URI which can be used to download the file
      */
-    String getfFileUri(String id);
+    String getFileUri(String id);
 }

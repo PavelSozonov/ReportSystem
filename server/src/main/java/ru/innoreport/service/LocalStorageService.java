@@ -8,7 +8,7 @@ public class LocalStorageService implements StorageService {
     }
 
     @Override
-    public String getfFileUri(String id) {
+    public String getFileUri(String id) {
         return null;
     }
 }
