@@ -5,7 +5,8 @@ import { MatSort, MatTableDataSource, MatDialog, MatPaginator } from '@angular/m
 
 import { ReportService } from '../../services/report.service';
 import { Report, ReportView } from '../../core/report';
-import { ReportDialogComponent } from './reportDialog/reportDialog.component';
+import { ReportDialogComponent, ReportDialogData } from './reportDialog/reportDialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-reports',
@@ -22,6 +23,7 @@ export class ReportsComponent implements OnInit {
     private reports: List<Report>;
 
     constructor(private readonly reportService: ReportService,
+        private readonly authService: AuthService,
         public reportDialog: MatDialog) {}
 
     ngOnInit(): void {
@@ -46,8 +48,11 @@ export class ReportsComponent implements OnInit {
         });
 
         const dialogRef = this.reportDialog.open(ReportDialogComponent, {
-            data: selectedReport,
-            width: '300px',
+            data: <ReportDialogData>{
+                report: selectedReport,
+                canEdit: this.authService.isAdmin(),
+                isCreate: false
+            }
         });
         console.log('LoginDialogComponent was opened');
 

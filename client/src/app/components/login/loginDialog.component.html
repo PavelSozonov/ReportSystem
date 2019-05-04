@@ -20,7 +20,7 @@
                minlength="5" 
                maxlength="20" 
                required />
-            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-icon matSuffix color="accent" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
     </div>
     <app-dialog-footer (clickSubmit)="validateUser()" 

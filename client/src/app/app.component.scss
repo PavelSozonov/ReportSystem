@@ -4,17 +4,33 @@
 
         mat-toolbar {
             position: fixed;
-            z-index: 1; //TODO
+            z-index: 1;
 
-            .toolbar-section {
-                /* This fills the remaining space, by using flexbox. 
-                   Every toolbar row uses a flexbox row layout. */
-                flex: 1 1 auto;
+            @media (min-width: 400px) {
+                .toolbar-section {
+                    /* This fills the remaining space, by using flexbox. 
+                       Every toolbar row uses a flexbox row layout. */
+                    flex: 1 1 auto;
+                }
             }
-            
+
             .account {
                 .user {
                     font-size: 14px;
+                }
+
+                @media (max-width: 400px) {
+                    button {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+
+                    .user {
+                        position: absolute;
+                        right: 1px;
+                        font-size: 13px;
+                    }
                 }
             }
         }
@@ -23,6 +39,7 @@
             width: 100%;
             height: calc(100% - 64px);
             padding-top: 64px;
+            overflow: auto;
 
             background: {
                 color: rgba(238, 238, 238, 0.3) !important; //transparent
@@ -32,10 +49,6 @@
                 attachment: fixed;
                 size: cover;
                 blend-mode: color; // TODO: check browser compatibility
-            }
-
-            @media (max-width: 1308px) {
-                background-size: 1308px 1080px;
             }
 
             router-outlet {

@@ -1,13 +1,38 @@
+$mat-card-margin: 5%;
+
 :host {
     mat-card {
-        margin-top: 5%;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-top: $mat-card-margin;
+        margin-left: $mat-card-margin;
+        margin-right: $mat-card-margin;
         width: 60%;
         float: left;
 
         &.description {
             float: right;
+        }
+
+        &:last-child {
+            margin-bottom: $mat-card-margin;
+        }
+    }
+}
+
+.app-mobile {
+    :host {
+        mat-card {
+            &:first-child {
+                margin-top: 1.4%;
+            }
+
+            @media (max-width: 400px) {
+                width: 80%;
+                float: none;
+
+                &.description {
+                    float: none;
+                }
+            }
         }
     }
 }

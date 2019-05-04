@@ -11,21 +11,32 @@ import { Report } from '../../../core/report';
 })
 export class ReportDialogComponent implements OnInit {
 
-    private username: string;
-    private password: string;
+    private isCreate = this.data.isCreate;
+    private canEdit = this.data.canEdit;
 
-    private dialogTitle = 'Report Dialog';
-    private submitButtonName = null;
+    private dialogTitle = this.isCreate ? 'New Report' : 'View Report';
+    private submitButtonName = this.isCreate ? 'Submit' : this.canEdit ? 'Change Status' : null;
+
+    private report: Report = this.data.report;
 
     constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
         private readonly router: Router,
-        @Inject(MAT_DIALOG_DATA) private report: Report) {
+        @Inject(MAT_DIALOG_DATA) private data: ReportDialogData) {
     }
 
     ngOnInit(): void {
-        console.log(`Report '${this.report.number}' was loaded into ReportDialogComponent`);
+        console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
     }
 
     public createReport(): void {
     }
+
+    public changeStatus(): void {
+    }
+}
+
+export interface ReportDialogData {
+    report: Report;
+    isCreate: boolean;
+    canEdit: boolean;
 }
