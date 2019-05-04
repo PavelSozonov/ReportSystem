@@ -1,0 +1,37 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>REPORTS!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ message }}</p>
+    </mat-card-content>
+</mat-card>
+
+<div class="report-list mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Report_number Column -->
+        <ng-container matColumnDef="number">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{report.number}} </mat-cell>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{report.title}} </mat-cell>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let report"> {{report.status}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 class="report-row"
+                 (click)="selectRow(row)">
+        </mat-row>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,28 @@
+<app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
+<form #reportForm="ngForm" (ngSubmit)="dialogRef.close(reportForm.value)" ngNativeValidate>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <input matInput 
+                   [(ngModel)]="username" 
+                   name="username" 
+                   placeholder="Username" 
+                   minlength="5" 
+                   maxlength="20" 
+                   autocomplete="off" 
+                   required />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput 
+               [(ngModel)]="password" 
+               name="password" 
+               placeholder="Enter your password" 
+               minlength="5" 
+               maxlength="20" 
+               required />
+        </mat-form-field>
+    </div>
+    <app-dialog-footer (clickSubmit)="createReport()" 
+                       [disabled]="!reportForm.valid" 
+                       [submitButtonName]="submitButtonName">
+    </app-dialog-footer>
+</form>

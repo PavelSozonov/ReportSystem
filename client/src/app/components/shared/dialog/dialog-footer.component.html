@@ -1,0 +1,9 @@
+<mat-dialog-actions>
+    <button *ngIf="submitButtonName"
+            mat-button
+            color="primary"
+            [disabled]="disabled"
+            type="submit"
+            (click)="submit()">{{submitButtonName}}</button>
+    <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+</mat-dialog-actions>

@@ -9,14 +9,20 @@ import ru.innoreport.service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public List<User> getUsersListView() {
         return userService.getUserListView();
+    }
+
+    @GetMapping(path = "/users/{username}")
+    public User getUserView(@PathVariable("username") String username) throws Exception {
+        return userService.getUserView(username);
     }
 
     @PutMapping(path = "/user", consumes = "application/json")
@@ -38,7 +44,7 @@ public class UserController {
         return userService.insertIntoUserList(code, name, entity);
     }
 
-    @DeleteMapping(path = "/user/{id}")
+    @DeleteMapping(path = "/users/{id}")
     public String deleteFromUserList(@PathVariable("id") String id) throws Exception {
         return userService.deleteFromUserList(id);
     }

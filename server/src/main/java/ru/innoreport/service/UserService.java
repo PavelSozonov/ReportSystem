@@ -11,20 +11,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("javadoc")
 @Component
 public class UserService {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+
+    public User getUserView(String username) {
+        return (User)jdbcTemplate.query(
+            "SELECT * FROM v_userlist WHERE scode = '" + username + "';",
+            (rs, rowNum) -> new User(rs.getLong("nid"),
+                rs.getString("scode"),
+                rs.getString("sname"),
+                rs.getString("sentity"),
+                rs.getString("spassword")
+            )
+        ).stream().collect(Collectors.toList()).get(0);
+    }
+
     public List<User> getUserListView() {
 
         return jdbcTemplate.query(
                 "SELECT * FROM v_userlist",
                 (rs, rowNum) -> new User(rs.getLong("nid"),
-                        rs.getString("scode"),
-                        rs.getString("sname"),
-                        rs.getString("sentity")
+                    rs.getString("scode"),
+                    rs.getString("sname"),
+                    rs.getString("sentity"),
+                    rs.getString("spassword")
                 )
         ).stream().collect(Collectors.toList());
     }

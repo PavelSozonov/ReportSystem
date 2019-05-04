@@ -14,15 +14,20 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "progress": true,
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "stylePreprocessorOptions": {
+                "includePaths": [
+                    "src/assets"
+                ]
+            },
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
+              "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/theme.scss"
+              "src/assets/styles/styles.css",
+              "src/assets/styles/theme.scss"
             ],
             "scripts": []
           },
@@ -72,12 +77,11 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/styles.css",
-              "src/theme.scss"
+              "src/assets/styles/styles.css",
+              "src/assets/styles/theme.scss"
             ],
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
+              "src/assets"
             ]
           }
         },
@@ -125,7 +129,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"

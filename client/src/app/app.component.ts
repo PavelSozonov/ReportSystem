@@ -1,70 +1,79 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { AuthService } from './core/auth.service';
-import { MatIconRegistry, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DialogComponent } from './dialog/dialog.component';
 
-import { User } from './core/user.model';
-import { Observable } from 'rxjs';
+import { AuthService } from './services/auth.service';
+import { browser } from './util/browser';
+import { LoginDialogComponent } from './components/login/loginDialog.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  links = [
-    {
-      icon: 'home',
-      path: '',
-      label: 'HOME'
-    },
+    private readonly links = [
+        {
+            icon: 'home',
+            path: '',
+            label: 'Home'
+        },
+        {
+            icon: 'assignment',
+            path: '/reports',
+            label: 'Reports'
+        },
+        {
+            icon: 'add',
+            path: '/reports/new',
+            label: 'New report'
+        }
+    ];
 
-    {
-      icon: 'list',
-      path: '/post/list',
-      label: 'POSTS'
-    },
-    {
-      icon: 'add',
-      path: '/post/new',
-      label: 'NEW POST'
+    constructor(
+        private readonly authService: AuthService,
+        public loginDialog: MatDialog) {
+            this.authService.loadUser();
+        }
+
+    private openLoginDialog(): void {
+        const dialogRef = this.loginDialog.open(LoginDialogComponent, {
+            width: '300px',
+        });
+        console.log('LoginDialogComponent was opened');
+
+        dialogRef.afterClosed().subscribe(() => {
+            console.log('LoginDialogComponent was closed');
+        });
+      }
+
+    public get isUserLoggedIn(): boolean {
+        return this.authService.isLoggedIn();
     }
-  ];
 
-  isDarkTheme = false;
-  currentUser: Observable<User>;
+    public get userName(): string {
+        return this.authService.userName;
+    }
 
-  constructor(
-    private auth: AuthService,
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
-    private dialog: MatDialog
-  ) {
-    // To avoid XSS attacks, the URL needs to be trusted from inside of your application.
-    const avatarsSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      './assets/avatars.svg'
-    );
-    this.iconRegistry.addSvgIconSetInNamespace('avatars', avatarsSafeUrl);
-    this.currentUser = this.auth.currentUser();
-  }
+    public logout(): void {
+        this.authService.logout();
+    }
 
-  // openAdminDialog() {
-  //   this.dialog.open(DialogComponent).afterClosed()
-  //     .filter(result => !!result)
-  //     .subscribe(user => {
-  //       this.users.push(user);
-  //       this.selectedUser = user;
-  //     });
-  // }
+    public get cssClassList(): string[] {
+        const res = new Array<string>();
 
-  ngOnInit(): void {
-    console.log('calling ngOnInit...');
-    this.auth.verifyAuth();
-  }
+        if (browser.isMobile()) {
+            res.push('app-mobile');
+        }
+        if (browser.isIE()) {
+            res.push('app-ie');
+        }
 
-  signout() {
-    this.auth.signout();
-  }
+        return res;
+    }
+
+    ngOnInit() {
+        console.log('AppComponent was loaded');
+    }
 }
