@@ -52,8 +52,14 @@ export class AppComponent implements OnInit {
         return this.authService.isLoggedIn();
     }
 
-    public get userName(): string {
-        return this.authService.userName;
+    public get userNameLabel(): string {
+        return browser.isMobile() === false
+            ? `Hello, ${this.authService.userName}!`
+            : this.authService.userName;
+    }
+
+    public get userRole(): string {
+        return this.authService.userEntity ? this.authService.userEntity : 'Citizen';
     }
 
     public logout(): void {

@@ -8,28 +8,43 @@
 
             @media (min-width: 400px) {
                 .toolbar-section {
-                    /* This fills the remaining space, by using flexbox. 
-                       Every toolbar row uses a flexbox row layout. */
                     flex: 1 1 auto;
                 }
+            }
+
+            @media (max-width: 400px) {
+                height: 67px;
             }
 
             .account {
                 .user {
                     font-size: 14px;
+                    margin-right: 25px;
+                    display: inline-block;
+                    text-align: right;
+
+                    .role {
+                        display: block;
+                    }
+                }
+
+                button {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
                 }
 
                 @media (max-width: 400px) {
-                    button {
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                    }
-
                     .user {
                         position: absolute;
                         right: 1px;
-                        font-size: 13px;
+                        font-size: 12px;
+                        margin-right: 10px;
+                        margin-top: -5px;
+
+                        .role {
+                            margin-top: -20px;
+                        }
                     }
                 }
             }
@@ -54,6 +69,12 @@
             router-outlet {
                 margin: 20px;
             }
+        }
+    }
+
+    .app-mobile {
+        .account > .user > .role {
+            margin-top: -10px;
         }
     }
 }

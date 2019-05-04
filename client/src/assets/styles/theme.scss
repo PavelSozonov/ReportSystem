@@ -11,10 +11,10 @@ $theme: mat-light-theme($primary, $accent);
 
 .dark-theme {
 
-  $dark-primary: mat-palette($mat-light-blue);
-  $dark-accent: mat-palette($mat-green);
+    $dark-primary: mat-palette($mat-light-blue);
+    $dark-accent: mat-palette($mat-green);
 
-  $dark-theme: mat-dark-theme($dark-primary, $dark-accent);
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent);
 
-  @include angular-material-theme($dark-theme);
+    @include angular-material-theme($dark-theme);
 }
