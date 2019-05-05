@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -12,7 +12,6 @@ import { FormService } from '../../services/form.service';
 @NgModule({
     declarations: [LoginDialogComponent],
     imports: [
-        FormsModule,
         MaterialModule,
         CommonModule,
         DialogModule,

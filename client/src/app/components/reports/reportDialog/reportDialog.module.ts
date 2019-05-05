@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { ReportDialogComponent } from './reportDialog.component';
@@ -13,7 +13,6 @@ import { FormService } from '../../../services/form.service';
 @NgModule({
     declarations: [ReportDialogComponent],
     imports: [
-        FormsModule,
         MaterialModule,
         DialogModule,
         ReactiveFormsModule,
