@@ -18,7 +18,7 @@ export class LoginDialogComponent implements OnInit {
     private submitButtonName = 'Log in';
     private hide = true;
 
-    private loginFormGroup: FormGroup;
+    private loginForm: FormGroup;
     private formErrors = {
         name: '',
         password: ''
@@ -36,24 +36,24 @@ export class LoginDialogComponent implements OnInit {
     }
 
     public validateUser(): void {
-        this.formService.markFormGroupTouched(this.loginFormGroup);
-        if (this.loginFormGroup.valid) {
-            const username: string = this.loginFormGroup.get('name').value;
-            const password: string = this.loginFormGroup.get('password').value;
+        this.formService.markFormGroupTouched(this.loginForm);
+        if (this.loginForm.valid) {
+            const username: string = this.loginForm.get('name').value;
+            const password: string = this.loginForm.get('password').value;
             this.authService.login(username, password).then(isLogin => {
                 if (isLogin) {
                     this.dialogRef.close();
                     this.router.navigate(['/reports']);
                 }
             });
-            this.loginFormGroup.reset();
+            this.loginForm.reset();
         } else {
-            this.formErrors = this.formService.validateForm(this.loginFormGroup, this.formErrors, false);
+            this.formErrors = this.formService.validateForm(this.loginForm, this.formErrors, false);
         }
     }
 
     private buildForm(): void {
-        this.loginFormGroup = this.form.group({
+        this.loginForm = this.form.group({
             name: [
                 '', [
                     Validators.required,
@@ -71,8 +71,8 @@ export class LoginDialogComponent implements OnInit {
             ]
         });
 
-        this.loginFormGroup.valueChanges.subscribe((data) => {
-            this.formErrors = this.formService.validateForm(this.loginFormGroup, this.formErrors, true);
+        this.loginForm.valueChanges.subscribe((data) => {
+            this.formErrors = this.formService.validateForm(this.loginForm, this.formErrors, true);
         });
     }
 }

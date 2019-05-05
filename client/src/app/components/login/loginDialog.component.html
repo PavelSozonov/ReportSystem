@@ -1,5 +1,5 @@
 <app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
-<form #loginForm="ngForm" [formGroup]="loginFormGroup" (ngSubmit)="dialogRef.close(loginForm.value)" novalidate>
+<form [formGroup]="loginForm" (ngSubmit)="dialogRef.close(loginForm.value)" novalidate>
     <div mat-dialog-content>
         <mat-form-field>
             <input matInput
