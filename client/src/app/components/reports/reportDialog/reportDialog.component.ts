@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import * as _ from 'lodash';
+import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
-
-import { Report } from '../../../core/report';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { Report, Status } from '../../../core/report';
 import { FormService } from '../../../services/form.service';
 
 @Component({
@@ -11,20 +12,24 @@ import { FormService } from '../../../services/form.service';
     templateUrl: 'reportDialog.component.html',
     styleUrls: ['reportDialog.component.scss']
 })
-export class ReportDialogComponent implements OnInit {
-    private reportsFormGroup: FormGroup;
+export class ReportDialogComponent implements OnInit, AfterViewInit {
+    private reportForm: FormGroup;
     private formErrors = {
         title: '',
         description: ''
     };
-    private isCreate = this.data.isCreate;
-    private canEdit = this.data.canEdit;
+    private readonly isCreate = this.data.isCreate;
+    private readonly canEdit = this.data.canEdit;
 
     private report: Report = this.data.report;
 
-    private dialogTitle = this.isCreate ? 'New Report' : `Report '${this.report.number}'`;
-    private submitButtonName = this.isCreate ? 'Submit' : this.canEdit ? 'Change Status' : null;
-    private submit = this.isCreate ? this.createReport : this.changeStatus;
+    private readonly dialogTitle = this.isCreate ? 'New Report' : `Report '${this.report.number}'`;
+    private readonly submitButtonName = this.isCreate ? 'Submit' : this.canEdit ? 'Change Status' : null;
+    private readonly submit = this.isCreate ? this.createReport : this.changeStatus;
+    private readonly filteredStatusList: string[] = _.filter(_.values(Status), value => typeof value === 'string');
+    private readonly disabledStatusList: string[] = _.filter([Status[Status.New], Status[Status.Sent]], value => {
+        return value !== Report.getStatusString(this.report);
+    });
 
     constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
         private readonly router: Router,
@@ -33,9 +38,16 @@ export class ReportDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) private data: ReportDialogData) {
     }
 
+    private checkStatusOption(option: string): boolean {
+        return _.includes(this.disabledStatusList, option);
+    }
+
     ngOnInit(): void {
         console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
         this.buildForm();
+    }
+
+    ngAfterViewInit(): void {
     }
 
     private createReport(): void {
@@ -45,7 +57,7 @@ export class ReportDialogComponent implements OnInit {
     }
 
     private buildForm(): void {
-        this.reportsFormGroup = new FormGroup({
+        this.reportForm = new FormGroup({
             title: new FormControl({
                 value: this.report.title,
                 disabled: !this.isCreate
@@ -54,11 +66,11 @@ export class ReportDialogComponent implements OnInit {
                 Validators.maxLength(50)
             ]),
             status: new FormControl({
-                value: this.report.statusString,
+                value: Report.getStatusString(this.report),
                 disabled: this.isCreate && !this.canEdit
             }),
             changeDate: new FormControl({
-                value: this.report.changeDateString,
+                value: Report.getChangeDateString(this.report),
                 disabled: true
             }),
             recipient: new FormControl({
@@ -78,8 +90,8 @@ export class ReportDialogComponent implements OnInit {
             ]),
         });
 
-        this.reportsFormGroup.valueChanges.subscribe((data) => {
-            this.formErrors = this.formService.validateForm(this.reportsFormGroup, this.formErrors, true);
+        this.reportForm.valueChanges.subscribe((data) => {
+            this.formErrors = this.formService.validateForm(this.reportForm, this.formErrors, true);
         });
     }
 }

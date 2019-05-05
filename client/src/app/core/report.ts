@@ -2,34 +2,34 @@ export class Report {
     constructor(
         public id: number,
         public title: string,
-        public description: string, // 600 chars
+        public description: string,
         public sender: string,
         public recipient: string,
         public status: Status,
-        private _changeDate: number,
+        private changeDate: number,
         public number: string
     ) {}
-
-    public get changeDate(): Date {
-       return new Date(this._changeDate);
-    }
-
-    public get changeDateString(): string {
-        return this.changeDate.toUTCString();
-    }
-
-    public get statusString(): string {
-        return Status[this.status];
-    }
 
     public static toView(report: Report): ReportView {
         return {
             number: report.number,
             title: report.title,
-            status: Status[report.status],
+            status: Report.getStatusString(report),
             recipient: report.recipient,
             sender: report.sender
         };
+    }
+
+    public static getChangeDate(report: Report): Date {
+       return new Date(report.changeDate);
+    }
+
+    public static getChangeDateString(report: Report): string {
+        return Report.getChangeDate(report).toUTCString();
+    }
+
+    public static getStatusString(report: Report): string {
+        return Status[report.status];
     }
 }
 
