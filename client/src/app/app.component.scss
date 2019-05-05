@@ -1,4 +1,14 @@
 :host {
+
+    /* We are using margin for scroll only to avoid conflicts with mat-toolbar menu */
+    ::-webkit-scrollbar-track {
+        margin-top: 64px;
+
+        @media (max-width: 600px) {
+            margin-top: 56px;
+        }
+    }
+
     div {
         height: 100%;
 
