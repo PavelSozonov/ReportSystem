@@ -14,8 +14,12 @@ export class Report {
        return new Date(this._changeDate);
     }
 
-    public get changeDataString(): string {
+    public get changeDateString(): string {
         return this.changeDate.toUTCString();
+    }
+
+    public get statusString(): string {
+        return Status[this.status];
     }
 
     public static toView(report: Report): ReportView {

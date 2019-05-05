@@ -1,52 +1,47 @@
 <app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
-<form #reportForm="ngForm" (ngSubmit)="dialogRef.close(reportForm.value)" ngNativeValidate>
+<form #reportForm="ngForm" [formGroup]="reportsFormGroup" (ngSubmit)="dialogRef.close(reportForm.value)" novalidate>
     <div mat-dialog-content>
-        <mat-form-field>
-            <input matInput 
-                   [(ngModel)]="report.number"
-                   name="number"
-                   placeholder="Number"
-                   [disabled]="true" />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.title"
-               name="title"
-               placeholder="Title"
-               minlength="5"
-               maxlength="20"
-               [disabled]="!isCreate"
-               required />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.description"
-               name="description"
-               placeholder="Description..."
-               minlength="5"
-               maxlength="600"
-               [disabled]="!isCreate" />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.recipient"
-               name="recipient"
-               placeholder="Recipient"
-               minlength="5"
-               maxlength="20"
-               [disabled]="!isCreate"
-               required />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.status"
-               name="status"
-               placeholder="Status"
-               [disabled]="isCreate && !canEdit"
-               required />
-        </mat-form-field>
+        <div>
+            <mat-form-field>
+                <input matInput
+                       formControlName="title"
+                       placeholder="Title" />
+            </mat-form-field>
+            <span>Keywords</span><!--TODO: Add logic-->
+            <mat-form-field>
+                <input matInput
+                       formControlName="status"
+                       placeholder="Status" />
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput
+                       formControlName="changeDate"
+                       placeholder="Last date" />
+            </mat-form-field>
+            <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
+            <ng-template #showRecipient *ngIf="!isCreate">
+                <mat-form-field>
+                    <input matInput
+                           formControlName="recipient"
+                           placeholder="Recipient" />
+                </mat-form-field>
+            </ng-template>
+            <ng-template #showSender>
+                <mat-form-field>
+                    <input matInput
+                           formControlName="sender"
+                           placeholder="Sender" />
+                </mat-form-field>
+            </ng-template>
+            <mat-form-field>
+                <input matInput
+                       formControlName="description"
+                       placeholder="Description" />
+            </mat-form-field>
+            <span>History</span><!--TODO: Add component-->
+        </div>
     </div>
-    <app-dialog-footer (clickSubmit)="createReport()"
+    <app-dialog-footer (clickSubmit)="submit()"
                        [disabled]="!reportForm.valid"
                        [submitButtonName]="submitButtonName">
     </app-dialog-footer>

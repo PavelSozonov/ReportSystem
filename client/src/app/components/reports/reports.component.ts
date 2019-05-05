@@ -45,7 +45,7 @@ export class ReportsComponent implements OnInit {
 
     private selectRow(row: ReportView): void {
         const selectedReport = _.find(this.reports, report => {
-            return report.number === row.number;
+            return report.number === row.number; // TODO: CHECK IT number can be hidden == null
         });
 
         const dialogRef = this.reportDialog.open(ReportDialogComponent, {
