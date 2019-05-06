@@ -1,32 +1,45 @@
-<mat-card>
+<mat-card class="mat-elevation-z8">
     <mat-card-header>
-        <mat-card-title>Hello, world!</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>{{ message }}</p>
-    </mat-card-content>
-</mat-card>
-
-<mat-card class='description'>
-    <mat-card-header>
-        <mat-card-title>How to use it</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>{{ message }}</p>
-    </mat-card-content>
-    <mat-card-actions>
+        <mat-card-title>InnoReport MVP:</mat-card-title>
         <button mat-button [routerLink]="['/reports']">
             <mat-icon>assignment</mat-icon>
             View Reports
         </button>
-  </mat-card-actions>
+    </mat-card-header>
 </mat-card>
 
-<mat-card>
+<mat-card class="mat-elevation-z8">
     <mat-card-header>
-        <mat-card-title>The second thing you should know</mat-card-title>
+        <mat-card-title>Functional requirements</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <p>{{ message }}</p>
+        <p>{{ systemDescription }}</p>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>Front-end</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ frontEnd }}</p>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>REST API</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ interface }}</p>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>Architecture and quality attributes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ qualityAttribute }}</p>
     </mat-card-content>
 </mat-card>

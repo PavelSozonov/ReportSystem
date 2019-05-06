@@ -42,6 +42,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatFormFieldModule,
 } from '@angular/material';
 
 @NgModule({
@@ -64,6 +65,7 @@ import {
         MatDialogModule,
         MatDividerModule,
         MatExpansionModule,
+        MatFormFieldModule,
         MatGridListModule,
         MatIconModule,
         MatInputModule,
@@ -87,7 +89,7 @@ import {
         MatTooltipModule,
         MatTreeModule,
         PortalModule,
-        ScrollingModule,
+        ScrollingModule
     ]
 })
 export class MaterialModule {}

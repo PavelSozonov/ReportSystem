@@ -2,9 +2,20 @@
 
 -- DROP VIEW v_reporthistory;
 
+/* History of a report statuses */
 CREATE OR REPLACE VIEW v_reporthistory AS 
- SELECT rh.id AS nid, rh.report AS nreport, r.number AS snumber, 
-    rh.status AS nstatus, rh.changedate AS dchangedate
+ SELECT rh.id AS nid,                   -- Identifier
+        rh.report AS nreport,           -- Report
+        r.number AS snumber,            -- Number of the report within a year
+        rh.status AS nstatus,           -- Status of a report
+                                         /* 0 - new,
+                                            1 - sent,
+                                            2 - received,
+                                            3 - in-progress,
+                                            4 - solved,
+                                            5 - declined
+                                           */
+        rh.changedate AS dchangedate    -- Date of a status change
    FROM reporthistory rh
    JOIN reports r ON r.id = rh.report;
 

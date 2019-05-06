@@ -1,4 +1,14 @@
 :host {
+
+    /* We are using margin for scroll only to avoid conflicts with mat-toolbar menu */
+    ::-webkit-scrollbar-track {
+        margin-top: 64px;
+
+        @media (max-width: 600px) {
+            margin-top: 56px;
+        }
+    }
+
     div {
         height: 100%;
 
@@ -19,7 +29,7 @@
             .account {
                 .user {
                     font-size: 14px;
-                    margin-right: 25px;
+                    margin-right: 35px;
                     display: inline-block;
                     text-align: right;
 
@@ -30,6 +40,9 @@
 
                 button {
                     position: absolute;
+                    margin-top: 10px;
+                    margin-right: 10px;
+                    margin-left: 0;
                     right: 0;
                     top: 0;
                 }

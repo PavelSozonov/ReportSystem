@@ -27,4 +27,10 @@ export class HttpService {
             headers: this.headers
         }).toPromise();
     }
+
+    public getTags(): Promise<string[]> {
+        return <Promise<string[]>>this.http.get(`${this.baseUrl}/tags/`, {
+            headers: this.headers
+        }).toPromise();
+    }
 }

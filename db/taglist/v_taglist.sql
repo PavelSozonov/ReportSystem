@@ -2,8 +2,12 @@
 
 -- DROP VIEW v_taglist;
 
+/* Tags */
 CREATE OR REPLACE VIEW v_taglist AS
- SELECT tl.id AS nid, tl.code AS scode, tl.name AS sname, el.code AS sentity
+ SELECT tl.id AS nid,       -- Identifier
+        tl.code AS scode,   -- Tag code (short name)
+        tl.name AS sname,   -- Tag full name
+        el.code AS sentity  -- Entity for Classifier module
    FROM taglist tl
    LEFT JOIN entitylist el ON el.id = tl.entity;
 

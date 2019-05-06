@@ -2,6 +2,7 @@
 
 -- DROP SEQUENCE seq_id;
 
+/* Sequence for identifiers generation */
 CREATE SEQUENCE seq_id
   INCREMENT 1
   MINVALUE 1

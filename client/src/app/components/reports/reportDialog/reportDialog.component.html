@@ -1,52 +1,57 @@
 <app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
-<form #reportForm="ngForm" (ngSubmit)="dialogRef.close(reportForm.value)" ngNativeValidate>
+<form [formGroup]="reportForm" (ngSubmit)="dialogRef.close(reportForm.value)" novalidate>
     <div mat-dialog-content>
+        <div class="container">
+            <div class="main-fields">
+                <mat-form-field>
+                    <input matInput
+                           formControlName="title"
+                           placeholder="Title" />
+                </mat-form-field>
+                <app-chips [tags]="tagList" [disabled]="!isCreate">
+                </app-chips>
+                <mat-form-field *ngIf="!isCreate">
+                    <mat-select placeholder="Status" formControlName="status">
+                        <mat-option *ngFor="let filteredStatus of filteredStatusList"
+                                    [value]="filteredStatus"
+                                    [disabled]="checkStatusOption(filteredStatus)">
+                            {{filteredStatus}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="!isCreate">
+                    <input matInput
+                           formControlName="changeDate"
+                           placeholder="Last date" />
+                </mat-form-field>
+                <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
+                <ng-template #showRecipient *ngIf="!isCreate">
+                    <mat-form-field>
+                        <input matInput
+                               formControlName="recipient"
+                               placeholder="Recipient" />
+                    </mat-form-field>
+                </ng-template>
+                <ng-template #showSender *ngIf="!isCreate">
+                    <mat-form-field>
+                        <input matInput
+                               formControlName="sender"
+                               placeholder="Sender" />
+                    </mat-form-field>
+                </ng-template>
+            </div>
+            <div class="photo">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div>
+        </div>
         <mat-form-field>
-            <input matInput 
-                   [(ngModel)]="report.number"
-                   name="number"
-                   placeholder="Number"
-                   [disabled]="true" />
+            <input matInput
+                   formControlName="description"
+                   placeholder="Description" />
         </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.title"
-               name="title"
-               placeholder="Title"
-               minlength="5"
-               maxlength="20"
-               [disabled]="!isCreate"
-               required />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.description"
-               name="description"
-               placeholder="Description..."
-               minlength="5"
-               maxlength="600"
-               [disabled]="!isCreate" />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.recipient"
-               name="recipient"
-               placeholder="Recipient"
-               minlength="5"
-               maxlength="20"
-               [disabled]="!isCreate"
-               required />
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput 
-               [(ngModel)]="report.status"
-               name="status"
-               placeholder="Status"
-               [disabled]="isCreate && !canEdit"
-               required />
-        </mat-form-field>
+        <span *ngIf="!isCreate">History</span><!--TODO: Add component-->
     </div>
-    <app-dialog-footer (clickSubmit)="createReport()"
+    <app-dialog-footer (clickSubmit)="submit()"
                        [disabled]="!reportForm.valid"
                        [submitButtonName]="submitButtonName">
     </app-dialog-footer>

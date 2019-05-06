@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { LoggerService } from './logger.service';
+import { MatDialog } from '@angular/material';
+import { LoginDialogComponent } from '../components/login/loginDialog.component';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +13,7 @@ import { LoggerService } from './logger.service';
 export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService,
         private readonly loggerService: LoggerService,
+        public loginDialog: MatDialog,
         private readonly router: Router) {}
 
     canActivate(next: ActivatedRouteSnapshot,
@@ -18,8 +21,20 @@ export class AuthGuard implements CanActivate {
         if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/home']);
             this.loggerService.error('To operate with reports you should log in...');
+            this.openLoginDialog();
             return false;
         }
         return true;
     }
+
+    private openLoginDialog(): void {
+        const dialogRef = this.loginDialog.open(LoginDialogComponent, {
+            width: '300px'
+        });
+        console.log('LoginDialogComponent was opened');
+
+        dialogRef.afterClosed().subscribe(() => {
+            console.log('LoginDialogComponent was closed');
+        });
+      }
 }

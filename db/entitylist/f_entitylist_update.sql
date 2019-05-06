@@ -2,19 +2,21 @@
 
 -- DROP FUNCTION f_entitylist_update(numeric, character varying, character varying);
 
+/* Update the entity */
 CREATE OR REPLACE FUNCTION f_entitylist_update(
-    nid numeric,
-    scode character varying,
-    sname character varying DEFAULT NULL::character varying)
+    nid numeric,                                             -- Entity identifier
+    scode character varying,                                 -- New code of the entity (short name)
+    sname character varying DEFAULT NULL::character varying) -- New full name of the entity
   RETURNS void AS
 $BODY$
-	DECLARE
-		nentity numeric(17);
 	BEGIN
+
+	    /* Update the entity */
 		update entitylist set
 			code = scode,
 			name = sname
 			where id = nid;
+
 	END;
 $BODY$
   LANGUAGE plpgsql;
