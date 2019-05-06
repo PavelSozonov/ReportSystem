@@ -1,9 +1,8 @@
 import * as _ from 'lodash';
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
 
 import { HttpService } from '../../../services/http.service';
-import { FormControlName, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-chips',
@@ -13,17 +12,23 @@ import { FormControlName, FormControl, FormGroup, Validators, FormBuilder } from
 export class ChipsComponent implements OnInit {
 
     @Input() disabled: boolean;
-    @Input() tags: string[];
 
-    private selectable = true;
-    private removable = this.disabled;
+    private readonly selectable = true;
+    private readonly removable = !this.disabled;
+    private readonly tagsError = 'Tags property should not be empty';
 
     private filteredTags: string[] = [];
 
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
+    public tags: string[] = [];
+
     constructor(private readonly httpService: HttpService) {
+    }
+
+    public valid(): boolean {
+        return this.tags.length !== 0;
     }
 
     private enabled(): boolean {

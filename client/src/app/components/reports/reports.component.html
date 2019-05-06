@@ -5,6 +5,11 @@
     <mat-card-content>
         <p>{{ message }}</p>
     </mat-card-content>
+    <div class="add-report">
+        <button mat-fab color="primary" (click)="openNewReportDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 </mat-card>
 
 <div class="report-list mat-elevation-z8">

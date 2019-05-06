@@ -1,12 +1,13 @@
 import * as _ from 'lodash';
-import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 
 import { Report, Status } from '../../../core/report';
 import { FormService } from '../../../services/form.service';
+import { ChipsComponent } from '../../shared/chips/chips.component';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
     selector: 'app-report-dialog',
@@ -14,12 +15,19 @@ import { FormService } from '../../../services/form.service';
     styleUrls: ['reportDialog.component.scss']
 })
 export class ReportDialogComponent implements OnInit, AfterViewInit {
+
+    constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
+        private form: FormBuilder,
+        private readonly formService: FormService,
+        private readonly reportService: ReportService,
+        @Inject(MAT_DIALOG_DATA) private data: ReportDialogData) {
+    }
     private reportForm: FormGroup;
     private formErrors = {
         title: '',
         description: ''
     };
-    private readonly isCreate = true; // this.data.isCreate;
+    private readonly isCreate = this.data.isCreate;
     private readonly canEdit = this.data.canEdit;
 
     private report: Report = this.data.report;
@@ -27,43 +35,48 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     private readonly dialogTitle = this.isCreate ? 'New Report' : `Report '${this.report.number}'`;
     private readonly submitButtonName = this.isCreate ? 'Submit' : this.canEdit ? 'Change Status' : null;
     private readonly submit = this.isCreate ? this.createReport : this.changeStatus;
-    private readonly filteredStatusList: string[] = _.filter(_.values(Status), value => typeof value === 'string');
-    private readonly disabledStatusList: string[] = _.filter([Status[Status.New], Status[Status.Sent]], value => {
-        return value !== Report.getStatusString(this.report);
-    });
-    private tagList: string[] = [];
+    private readonly filteredStatusList: string[] = !this.isCreate
+        ? _.filter(_.values(Status), value => typeof value === 'string')
+        : [];
+    private readonly disabledStatusList: string[] = !this.isCreate
+        ? _.filter([Status[Status.New], Status[Status.Sent]], value => {
+            return value !== Report.getStatusString(this.report);
+        })
+        : [];
 
-    galleryOptions: NgxGalleryOptions[];
-    galleryImages: NgxGalleryImage[];
+    @ViewChild(ChipsComponent)
+    private chipsComponent: ChipsComponent;
 
-    constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
-        private readonly router: Router,
-        private form: FormBuilder,
-        private readonly formService: FormService,
-        @Inject(MAT_DIALOG_DATA) private data: ReportDialogData) {
-    }
+    private galleryOptions: NgxGalleryOptions[];
+    private galleryImages: NgxGalleryImage[];
+
+    private submitted = false;
 
     private checkStatusOption(option: string): boolean {
         return _.includes(this.disabledStatusList, option);
     }
 
     ngOnInit(): void {
-        console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
+        if (!this.isCreate) {
+            console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
+        }
         this.buildForm();
         this.galleryOptions = [
             {
                 thumbnails: false,
                 arrowNextIcon: '',
                 arrowPrevIcon: '',
-                width: '154px',
-                height: '154px',
+                width: '152px',
+                height: '152px',
                 previewCloseOnClick: true,
                 previewCloseOnEsc: true
             },
             {
                 breakpoint: 500,
                 width: '100%',
-                height: '200px',
+                height: '200px'
+                // TODO: find solution for full screen.
+                // if full screen solution for draggable dialogs will be found then switch on draggable dialogs.
             }
         ];
 
@@ -80,13 +93,26 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     }
 
     private createReport(): void {
+        const title: string = this.reportForm.get('title').value;
+        const description: string = this.reportForm.get('description').value;
+        const tags = this.chipsComponent.tags;
+        this.reportService.createReport(title, description, tags).then(submitted => {
+            this.dialogRef.close(submitted);
+        }).catch(err => {
+            console.error(err);
+        });
     }
 
     private changeStatus(): void {
     }
 
+    private valid(): boolean {
+        return this.reportForm.valid && this.chipsComponent.valid();
+    }
+
     private buildForm(): void {
-        this.reportForm = new FormGroup({
+        this.report = this.isCreate ? new Report() : this.report;
+        this.reportForm = this.form.group({
             title: new FormControl({
                 value: this.report.title,
                 disabled: !this.isCreate

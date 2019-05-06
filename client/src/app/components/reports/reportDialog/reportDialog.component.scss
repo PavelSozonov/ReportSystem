@@ -6,6 +6,11 @@
             width: 100%;
         }
 
+        .description {
+            min-height: 50px;
+            max-height: 270px;
+        }
+
         .mat-input-element:disabled {
             color: black;
         }

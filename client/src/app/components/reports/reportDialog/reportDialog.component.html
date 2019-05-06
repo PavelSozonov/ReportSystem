@@ -4,11 +4,16 @@
         <div class="container">
             <div class="main-fields">
                 <mat-form-field>
-                    <input matInput
-                           formControlName="title"
-                           placeholder="Title" />
+                    <textarea matInput
+                              cdkTextareaAutosize
+                              cdkAutosizeMinRows="2"
+                              cdkAutosizeMaxRows="3"
+                              formControlName="title"
+                              placeholder="Title">
+                    </textarea>
+                    <mat-error *ngIf="formErrors.title" class="form__error">{{ formErrors.title }}</mat-error>
                 </mat-form-field>
-                <app-chips [tags]="tagList" [disabled]="!isCreate">
+                <app-chips [disabled]="!isCreate">
                 </app-chips>
                 <mat-form-field *ngIf="!isCreate">
                     <mat-select placeholder="Status" formControlName="status">
@@ -42,17 +47,28 @@
             </div>
             <div class="photo">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                <button *ngIf="submitButtonName"
+                        mat-raised-button
+                        color="accent"
+                        [disabled]="disabled"
+                        type="button"
+                        (click)="uploadImage()">
+                    {{submitButtonName}}
+                </button>
             </div>
         </div>
         <mat-form-field>
-            <input matInput
-                   formControlName="description"
-                   placeholder="Description" />
+            <textarea matInput
+                      class="description"
+                      placeholder="Description"
+                      formControlName="description" >
+            </textarea>
+            <mat-error *ngIf="formErrors.description" class="form__error">{{ formErrors.description }}</mat-error>
         </mat-form-field>
         <span *ngIf="!isCreate">History</span><!--TODO: Add component-->
     </div>
     <app-dialog-footer (clickSubmit)="submit()"
-                       [disabled]="!reportForm.valid"
+                       [disabled]="!valid()"
                        [submitButtonName]="submitButtonName">
     </app-dialog-footer>
 </form>
