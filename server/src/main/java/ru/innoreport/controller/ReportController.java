@@ -36,7 +36,8 @@ public class ReportController {
     public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
         JsonObject jsonObject = getJsonObject(json);
         if (!Objects.isNull(jsonObject.get("params"))) {
-            jsonObject = getJsonObject(jsonObject.get("params").toString());
+            String params = removeQuotes(jsonObject.get("params").toString().replace("\\\"", "\""));
+            jsonObject = getJsonObject(params);
         }
         final String title = removeQuotes(jsonObject.get("title").toString());
         final String description = removeQuotes(jsonObject.get("description").toString());
