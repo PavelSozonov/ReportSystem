@@ -26,6 +26,11 @@ public class ReportController {
     @Autowired
     ClassificationService classificationService;
 
+    @DeleteMapping(path = "/reports/{id}")
+    public String deleteFromReport(@PathVariable("id") String id) throws Exception {
+        return reportService.deleteFromReports(id);
+    }
+
     @PostMapping(path = "/reports", consumes = "application/json")
     public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
         final JsonObject jsonObject = getJsonObject(json);

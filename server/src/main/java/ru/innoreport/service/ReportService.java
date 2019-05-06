@@ -102,6 +102,15 @@ public class ReportService {
         return result.get("returnvalue").toString();
     }
 
+    public String deleteFromReports(String id) {
+        final SimpleJdbcCall deleteFromReports = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_delete");
+        final Map<String, Object> params = new HashMap<>();
+        params.put("nid", id);
+
+        final Map<String, Object> result = deleteFromReports.execute(params);
+        return result.get("returnvalue").toString();
+    }
+
     public String insertIntoReports(String title, String description, String sender) {
         final SimpleJdbcCall insertIntoReports = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_reports_insert");
         final Map<String, Object> params = new HashMap<>();
