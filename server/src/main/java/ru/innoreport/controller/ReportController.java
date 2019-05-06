@@ -6,14 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import ru.innoreport.dao.Report;
 import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.dao.ReportTags;
-import ru.innoreport.service.ClassificationService;
-import ru.innoreport.service.ReportService;
+import ru.innoreport.service.classification.ClassificationService;
+import ru.innoreport.service.report.processing.ReportService;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -28,8 +29,10 @@ public class ReportController {
 
     @PostMapping(path = "/reports", consumes = "application/json")
     public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
-        final JsonObject jsonObject = getJsonObject(json);
-
+        JsonObject jsonObject = getJsonObject(json);
+        if (!Objects.isNull(jsonObject.get("params"))) {
+            jsonObject = getJsonObject(jsonObject.get("params").toString());
+        }
         final String title = removeQuotes(jsonObject.get("title").toString());
         final String description = removeQuotes(jsonObject.get("description").toString());
         final String sender = removeQuotes(jsonObject.get("sender").toString());
@@ -132,6 +135,9 @@ public class ReportController {
     }
 
     private String removeQuotes(String value) {
-        return value.substring(1, value.length() - 1);
+        if (value.startsWith("\"")) {
+            return value.substring(1, value.length() - 1);
+        }
+        return value;
     }
 }
