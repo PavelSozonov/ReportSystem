@@ -13,16 +13,16 @@ export class ChipsComponent implements OnInit {
 
     @Input() disabled: boolean;
 
+    public tags: string[] = [];
+
+    private removable: boolean;
     private readonly selectable = true;
-    private readonly removable = !this.disabled;
     private readonly tagsError = 'Tags property should not be empty';
 
     private filteredTags: string[] = [];
 
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
-    public tags: string[] = [];
 
     constructor(private readonly httpService: HttpService) {
     }
@@ -45,6 +45,7 @@ export class ChipsComponent implements OnInit {
             this.tags.splice(index, 1);
             this.filteredTags.push(tag);
         }
+        this.tagInput.nativeElement.blur();
     }
 
     private selected(event: MatAutocompleteSelectedEvent): void {
@@ -54,10 +55,12 @@ export class ChipsComponent implements OnInit {
             this.tags.push(event.option.viewValue);
             this.filteredTags.splice(index, 1);
         }
+        this.tagInput.nativeElement.blur();
     }
 
     ngOnInit(): void {
         console.log('ChipsComponent was loaded');
+        this.removable = !this.disabled;
 
         this.httpService.getTags().then(tags => {
             this.filteredTags = tags;
