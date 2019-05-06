@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../core/user';
-import { Report } from '../core/report';
+import { Report, NewReport } from '../core/report';
 import { List } from 'lodash';
 
 @Injectable({
@@ -22,7 +22,6 @@ export class HttpService {
     }
 
     public getReports(username: string, entity?: string): Promise<List<Report>> {
-
         return <Promise<List<Report>>>this.http.get(`${this.baseUrl}/reports/${username}/${entity}`, {
             headers: this.headers
         }).toPromise();
@@ -31,6 +30,14 @@ export class HttpService {
     public getTags(): Promise<string[]> {
         return <Promise<string[]>>this.http.get(`${this.baseUrl}/tags/`, {
             headers: this.headers
+        }).toPromise();
+    }
+
+    public createReport(report: NewReport): Promise<boolean> {
+        const params = JSON.stringify(report);
+        return <Promise<boolean>>this.http.post(`${this.baseUrl}/reports/`, {
+            headers: this.headers,
+            params: params
         }).toPromise();
     }
 }

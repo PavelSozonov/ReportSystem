@@ -1,14 +1,14 @@
 export class Report {
-    constructor(
-        public id: number,
-        public title: string,
-        public description: string,
-        public sender: string,
-        public recipient: string,
-        public status: Status,
-        private changeDate: number,
-        public number: string
-    ) {}
+    public id: number;
+    public title: string;
+    public description: string;
+    public sender: string;
+    public recipient: string;
+    public status: Status;
+    private changeDate: number;
+    public number: string;
+
+    constructor() {}
 
     public static toView(report: Report): ReportView {
         return {
@@ -41,6 +41,12 @@ export interface ReportView {
     sender: string;
 }
 
+export interface NewReport {
+    title: string;
+    description: string;
+    sender: string;
+    tags: string[];
+}
 
 export enum Status {
     'New',

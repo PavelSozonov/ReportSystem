@@ -2,6 +2,17 @@
     mat-card {
         margin: 5%;
         width: 55%;
+
+        mat-card-content {
+            display: inline-block;
+            width: 80%;
+        }
+
+        .add-report {
+            display: inline-block;
+            width: 20%;
+            text-align: right;
+        }
     }
 
     .report-list {
@@ -31,13 +42,17 @@
         }
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 560px) {
         mat-card {
             margin-top: 0;
             margin-bottom: 1%;
             margin-left: 2%;
             margin-right: 2%;
             width: 86%;
+        }
+
+        .add-report {
+            width: 15%;
         }
 
         .report-list {

@@ -13,6 +13,7 @@
                [disabled]="!enabled()"
                [matAutocomplete]="auto"
                [matChipInputFor]="chipList">
+        <mat-error *ngIf="!valid() && !disabled" class="form__error">{{ tagsError }}</mat-error>
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let tag of filteredTags" [value]="tag">

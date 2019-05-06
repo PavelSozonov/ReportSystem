@@ -29,7 +29,10 @@ export class ReportsComponent implements OnInit {
 
     ngOnInit(): void {
         console.log('ReportsComponent was loaded');
+        this.updateTable();
+    }
 
+    private updateTable(): void {
         this.reportService.getReports().then(reports => {
             this.reports = reports;
             const reportsToView = _.map(reports, report => {
@@ -59,6 +62,24 @@ export class ReportsComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(() => {
             console.log('LoginDialogComponent was closed');
+        });
+    }
+
+    private openNewReportDialog(): void {
+        const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+            data: <ReportDialogData>{
+                report: null,
+                canEdit: false,
+                isCreate: true
+            }
+        });
+        console.log('LoginDialogComponent was opened');
+
+        dialogRef.afterClosed().subscribe((value: any) => {
+            console.log('LoginDialogComponent was closed');
+            if (value) {
+                this.updateTable();
+            }
         });
     }
 

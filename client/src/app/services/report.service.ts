@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpService } from './http.service';
 import { LoggerService } from './logger.service';
-import { Report } from '../core/report';
+import { Report, NewReport } from '../core/report';
 import { List } from 'lodash';
 import { AuthService } from './auth.service';
 
@@ -35,4 +35,18 @@ export class ReportService {
         }
     }
 
+    public async createReport(title: string, description: string, tags: string[]): Promise<boolean> {
+        try {
+            const newReport: NewReport = {
+                title: title,
+                description: description,
+                sender: this.authService.userName,
+                tags: tags
+            };
+            return await this.httpService.createReport(newReport);
+        } catch (err) {
+            this.loggerService.error(`ERROR: ${err}`);
+            return false;
+        }
+    }
 }
