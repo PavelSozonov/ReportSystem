@@ -1,7 +1,8 @@
-package ru.innoreport.service;
+package ru.innoreport.service.classification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.innoreport.dao.TagEntity;
+import ru.innoreport.service.report.processing.ReportService;
 
 import java.util.Comparator;
 import java.util.List;

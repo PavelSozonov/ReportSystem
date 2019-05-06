@@ -1,4 +1,4 @@
-package ru.innoreport.service;
+package ru.innoreport.service.storage;
 
 public interface StorageService {
 

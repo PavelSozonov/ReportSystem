@@ -1,4 +1,4 @@
-package ru.innoreport.service;
+package ru.innoreport.service.storage;
 
 public class LocalStorageService implements StorageService {
 

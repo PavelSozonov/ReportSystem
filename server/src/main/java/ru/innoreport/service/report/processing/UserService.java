@@ -1,4 +1,4 @@
-package ru.innoreport.service;
+package ru.innoreport.service.report.processing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

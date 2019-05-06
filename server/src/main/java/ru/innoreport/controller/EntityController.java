@@ -3,7 +3,7 @@ package ru.innoreport.controller;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.innoreport.service.EntityService;
+import ru.innoreport.service.report.processing.EntityService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200")

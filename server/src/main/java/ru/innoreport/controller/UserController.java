@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.innoreport.dao.User;
-import ru.innoreport.service.UserService;
+import ru.innoreport.service.report.processing.UserService;
 
 import java.util.List;
 
