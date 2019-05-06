@@ -30,15 +30,15 @@
                            placeholder="Last date" />
                 </mat-form-field>
                 <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
-                <ng-template #showRecipient *ngIf="!isCreate">
-                    <mat-form-field>
+                <ng-template #showRecipient>
+                    <mat-form-field *ngIf="!isCreate">
                         <input matInput
                                formControlName="recipient"
                                placeholder="Recipient" />
                     </mat-form-field>
                 </ng-template>
-                <ng-template #showSender *ngIf="!isCreate">
-                    <mat-form-field>
+                <ng-template #showSender>
+                    <mat-form-field *ngIf="!isCreate">
                         <input matInput
                                formControlName="sender"
                                placeholder="Sender" />
@@ -47,14 +47,8 @@
             </div>
             <div class="photo">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-                <button *ngIf="submitButtonName"
-                        mat-raised-button
-                        color="accent"
-                        [disabled]="disabled"
-                        type="button"
-                        (click)="uploadImage()">
-                    {{submitButtonName}}
-                </button>
+                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
             </div>
         </div>
         <mat-form-field>

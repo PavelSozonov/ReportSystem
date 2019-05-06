@@ -35,7 +35,16 @@ export class ReportService {
         }
     }
 
-    public async createReport(title: string, description: string, tags: string[]): Promise<boolean> {
+    public async getTags(reportId: number): Promise<List<string>> {
+        try {
+            return await this.httpService.getReportTags(reportId);
+        } catch (err) {
+            this.loggerService.error(`ERROR: ${err}`);
+            return null;
+        }
+    }
+
+    public async createReport(title: string, description: string, tags: string[]): Promise<number> {
         try {
             const newReport: NewReport = {
                 title: title,
@@ -46,7 +55,7 @@ export class ReportService {
             return await this.httpService.createReport(newReport);
         } catch (err) {
             this.loggerService.error(`ERROR: ${err}`);
-            return false;
+            return null;
         }
     }
 }

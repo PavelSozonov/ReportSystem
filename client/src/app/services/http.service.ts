@@ -33,9 +33,15 @@ export class HttpService {
         }).toPromise();
     }
 
-    public createReport(report: NewReport): Promise<boolean> {
+    public getReportTags(reportId: number): Promise<string[]> {
+        return <Promise<string[]>>this.http.get(`${this.baseUrl}/reports/${reportId}/tags/`, {
+            headers: this.headers
+        }).toPromise();
+    }
+
+    public createReport(report: NewReport): Promise<number> {
         const params = JSON.stringify(report);
-        return <Promise<boolean>>this.http.post(`${this.baseUrl}/reports/`, {
+        return <Promise<number>>this.http.post(`${this.baseUrl}/reports/`, {
             headers: this.headers,
             params: params
         }).toPromise();
