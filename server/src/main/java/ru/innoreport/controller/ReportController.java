@@ -9,13 +9,12 @@ import ru.innoreport.dao.ReportTags;
 import ru.innoreport.service.classification.ClassificationService;
 import ru.innoreport.service.report.processing.ReportService;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.StringReader;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static ru.innoreport.util.JsonUtils.getJsonObjectWithParams;
+import static ru.innoreport.util.JsonUtils.removeQuotes;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,11 +33,7 @@ public class ReportController {
 
     @PostMapping(path = "/reports", consumes = "application/json")
     public String insertIntoReports(@RequestBody(required = true) String json) throws Exception {
-        JsonObject jsonObject = getJsonObject(json);
-        if (!Objects.isNull(jsonObject.get("params"))) {
-            String params = removeQuotes(jsonObject.get("params").toString().replace("\\\"", "\""));
-            jsonObject = getJsonObject(params);
-        }
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         final String title = removeQuotes(jsonObject.get("title").toString());
         final String description = removeQuotes(jsonObject.get("description").toString());
         final String sender = removeQuotes(jsonObject.get("sender").toString());
@@ -58,14 +53,6 @@ public class ReportController {
         classificationService.setEntityCode(reportId);
 
         return reportId;
-    }
-
-    private JsonObject getJsonObject(@RequestBody(required = true) String json) {
-        JsonObject jsonObject;
-        try (JsonReader jsonReader = Json.createReader(new StringReader(json))) {
-            jsonObject = jsonReader.readObject();
-        }
-        return jsonObject;
     }
 
     @PostMapping(path = "/reports/tags", consumes = "application/json")
@@ -138,12 +125,5 @@ public class ReportController {
         String status = jsonObject.get("changeDate").toString();
         String changeDate = jsonObject.get("changeDate").toString();
         return reportService.insertIntoReportHistory(report, status, changeDate);
-    }
-
-    private String removeQuotes(String value) {
-        if (value.startsWith("\"")) {
-            return value.substring(1, value.length() - 1);
-        }
-        return value;
     }
 }

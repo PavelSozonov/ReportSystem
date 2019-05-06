@@ -1,12 +1,15 @@
 package ru.innoreport.controller;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.innoreport.service.report.processing.EntityService;
 
+import javax.json.JsonObject;
+
+import static ru.innoreport.util.JsonUtils.getJsonObjectWithParams;
+
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EntityController {
 
     @Autowired
@@ -14,7 +17,7 @@ public class EntityController {
 
     @PostMapping(path = "/entitylist", consumes = "application/json")
     public String insertIntoEntityList(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String name = jsonObject.get("name").toString();
         String code = jsonObject.get("code").toString();
         return entityService.insertIntoEntityList(code, name);
@@ -27,7 +30,7 @@ public class EntityController {
 
     @PutMapping(path = "/entitylist", consumes = "application/json")
     public String updateEntityList(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String id = jsonObject.get("id").toString();
         String name = jsonObject.get("name").toString();
         String code = jsonObject.get("code").toString();
