@@ -28,7 +28,7 @@ public class EntityService {
     public String deleteFromEntityList(String id) {
         final SimpleJdbcCall deleteFromEntityList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_entitylist_delete");
         final Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
+        params.put("nid", id);
 
         final Map<String, Object> result = deleteFromEntityList.execute(params);
         return result.get("returnvalue").toString();
