@@ -9,5 +9,19 @@
         .mat-input-element:disabled {
             color: black;
         }
+
+        .container {
+            width: 100%;
+
+            .main-fields {
+                display: inline-block;
+                width: 70%;
+            }
+
+            .photo {
+                display: inline-block;
+                width: 30%;
+            }
+        }
     }
 }

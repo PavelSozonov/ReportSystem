@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 
 import { Report, Status } from '../../../core/report';
 import { FormService } from '../../../services/form.service';
@@ -18,7 +19,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
         title: '',
         description: ''
     };
-    private readonly isCreate = this.data.isCreate;
+    private readonly isCreate = true; // this.data.isCreate;
     private readonly canEdit = this.data.canEdit;
 
     private report: Report = this.data.report;
@@ -30,6 +31,10 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     private readonly disabledStatusList: string[] = _.filter([Status[Status.New], Status[Status.Sent]], value => {
         return value !== Report.getStatusString(this.report);
     });
+    private tagList: string[] = [];
+
+    galleryOptions: NgxGalleryOptions[];
+    galleryImages: NgxGalleryImage[];
 
     constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
         private readonly router: Router,
@@ -45,6 +50,30 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
         this.buildForm();
+        this.galleryOptions = [
+            {
+                thumbnails: false,
+                arrowNextIcon: '',
+                arrowPrevIcon: '',
+                width: '154px',
+                height: '154px',
+                previewCloseOnClick: true,
+                previewCloseOnEsc: true
+            },
+            {
+                breakpoint: 500,
+                width: '100%',
+                height: '200px',
+            }
+        ];
+
+        this.galleryImages = [
+            {
+                small: 'assets/innopolis.jpg',
+                medium: 'assets/innopolis.jpg',
+                big: 'assets/innopolis.jpg'
+            }
+        ];
     }
 
     ngAfterViewInit(): void {
@@ -87,7 +116,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
             }, [
                 Validators.required,
                 Validators.maxLength(600)
-            ]),
+            ])
         });
 
         this.reportForm.valueChanges.subscribe((data) => {

@@ -1,49 +1,55 @@
 <app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
 <form [formGroup]="reportForm" (ngSubmit)="dialogRef.close(reportForm.value)" novalidate>
     <div mat-dialog-content>
-        <div>
-            <mat-form-field>
-                <input matInput
-                       formControlName="title"
-                       placeholder="Title" />
-            </mat-form-field>
-            <span>Keywords</span><!--TODO: Add logic-->
-            <mat-form-field>
-                <mat-select placeholder="Status" formControlName="status">
-                    <mat-option *ngFor="let filteredStatus of filteredStatusList"
-                                [value]="filteredStatus"
-                                [disabled]="checkStatusOption(filteredStatus)">
-                        {{filteredStatus}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput
-                       formControlName="changeDate"
-                       placeholder="Last date" />
-            </mat-form-field>
-            <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
-            <ng-template #showRecipient *ngIf="!isCreate">
+        <div class="container">
+            <div class="main-fields">
                 <mat-form-field>
                     <input matInput
-                           formControlName="recipient"
-                           placeholder="Recipient" />
+                           formControlName="title"
+                           placeholder="Title" />
                 </mat-form-field>
-            </ng-template>
-            <ng-template #showSender>
-                <mat-form-field>
+                <app-chips [tags]="tagList" [disabled]="!isCreate">
+                </app-chips>
+                <mat-form-field *ngIf="!isCreate">
+                    <mat-select placeholder="Status" formControlName="status">
+                        <mat-option *ngFor="let filteredStatus of filteredStatusList"
+                                    [value]="filteredStatus"
+                                    [disabled]="checkStatusOption(filteredStatus)">
+                            {{filteredStatus}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="!isCreate">
                     <input matInput
-                           formControlName="sender"
-                           placeholder="Sender" />
+                           formControlName="changeDate"
+                           placeholder="Last date" />
                 </mat-form-field>
-            </ng-template>
-            <mat-form-field>
-                <input matInput
-                       formControlName="description"
-                       placeholder="Description" />
-            </mat-form-field>
-            <span>History</span><!--TODO: Add component-->
+                <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
+                <ng-template #showRecipient *ngIf="!isCreate">
+                    <mat-form-field>
+                        <input matInput
+                               formControlName="recipient"
+                               placeholder="Recipient" />
+                    </mat-form-field>
+                </ng-template>
+                <ng-template #showSender *ngIf="!isCreate">
+                    <mat-form-field>
+                        <input matInput
+                               formControlName="sender"
+                               placeholder="Sender" />
+                    </mat-form-field>
+                </ng-template>
+            </div>
+            <div class="photo">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div>
         </div>
+        <mat-form-field>
+            <input matInput
+                   formControlName="description"
+                   placeholder="Description" />
+        </mat-form-field>
+        <span *ngIf="!isCreate">History</span><!--TODO: Add component-->
     </div>
     <app-dialog-footer (clickSubmit)="submit()"
                        [disabled]="!reportForm.valid"
