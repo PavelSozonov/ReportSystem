@@ -2,5 +2,6 @@
 *.iml
 target
 .DS_Store
+serviceAccountKey.json
 
 client/node_modules/

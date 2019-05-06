@@ -3,6 +3,7 @@ package ru.innoreport.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.innoreport.service.report.processing.EntityService;
+import ru.innoreport.service.storage.StorageService;
 
 import javax.json.JsonObject;
 
@@ -14,6 +15,9 @@ public class EntityController {
 
     @Autowired
     EntityService entityService;
+
+    @Autowired
+    StorageService storageService;
 
     @PostMapping(path = "/entitylist", consumes = "application/json")
     public String insertIntoEntityList(@RequestBody(required = true) String json) throws Exception {

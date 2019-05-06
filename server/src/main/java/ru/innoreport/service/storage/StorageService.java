@@ -1,14 +1,17 @@
 package ru.innoreport.service.storage;
 
+import java.io.IOException;
+
 public interface StorageService {
 
     /**
      * Saves a file to the storage
      *
-     * @param base64File is a base64 representation of the file to be saved
-     * @return id of created file
+     * @param base64 is a base64 representation of the file to be saved
+     * @param id     of the file
+     * @return url of the file
      */
-    String saveFile(String base64File);
+    String saveFile(String base64, String id) throws IOException;
 
     /**
      * Returns an URI of file with particular ID

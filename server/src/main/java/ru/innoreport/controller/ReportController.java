@@ -8,6 +8,7 @@ import ru.innoreport.dao.ReportHistory;
 import ru.innoreport.dao.ReportTags;
 import ru.innoreport.service.classification.ClassificationService;
 import ru.innoreport.service.report.processing.ReportService;
+import ru.innoreport.service.storage.StorageService;
 
 import javax.json.JsonObject;
 import java.util.List;
@@ -26,6 +27,9 @@ public class ReportController {
     @Autowired
     ClassificationService classificationService;
 
+    @Autowired
+    StorageService storageService;
+
     @DeleteMapping(path = "/reports/{id}")
     public String deleteFromReport(@PathVariable("id") String id) throws Exception {
         return reportService.deleteFromReports(id);
@@ -37,6 +41,7 @@ public class ReportController {
         final String title = removeQuotes(jsonObject.get("title").toString());
         final String description = removeQuotes(jsonObject.get("description").toString());
         final String sender = removeQuotes(jsonObject.get("sender").toString());
+        final String imageBase64 = removeQuotes(jsonObject.get("image").toString());
         final List<String> tags = jsonObject
                 .getJsonArray("tags")
                 .stream()
@@ -51,6 +56,11 @@ public class ReportController {
 
         // Set entity
         classificationService.setEntityCode(reportId);
+
+        // Upload image
+        if (imageBase64 != null && !imageBase64.isEmpty()) {
+            storageService.saveFile(imageBase64, reportId);
+        }
 
         return reportId;
     }
