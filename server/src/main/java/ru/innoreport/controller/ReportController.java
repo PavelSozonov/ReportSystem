@@ -57,7 +57,7 @@ public class ReportController {
 
     @PostMapping(path = "/reports/tags", consumes = "application/json")
     public String insertReportTags(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String reportId = jsonObject.get("report").toString();
         String tag = jsonObject.get("tag").toString();
         return reportService.insertReportTags(reportId, tag);
@@ -84,6 +84,14 @@ public class ReportController {
         return reportService.getReportsView(username, entity);
     }
 
+    @PutMapping(path = "/reports/status", consumes = "application/json")
+    public String updateReportStatus(@RequestBody(required = true) String json) throws Exception {
+        JsonObject jsonObject = getJsonObjectWithParams(json);
+        String id = jsonObject.get("id").toString();
+        String status = jsonObject.get("status").toString();
+        return reportService.updateReportStatus(id, status);
+    }
+
     @GetMapping("/report/history")
     public List<ReportHistory> getReportHistoryView() {
         return reportService.getReportHistoryView();
@@ -96,7 +104,7 @@ public class ReportController {
 
     @PostMapping(path = "/tag", consumes = "application/json")
     public String insertIntoTagList(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String code = jsonObject.get("code").toString();
         String name = jsonObject.get("name").toString();
         return reportService.insertIntoTagList(code, name);
@@ -104,23 +112,15 @@ public class ReportController {
 
     @PostMapping(path = "/report/status", consumes = "application/json")
     public String sendReportStatus(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String id = jsonObject.get("id").toString();
         String entity = jsonObject.get("entity").toString();
         return reportService.sendReportStatus(id, entity);
     }
 
-    @PutMapping(path = "/report/status", consumes = "application/json")
-    public String updateReportStatus(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
-        String id = jsonObject.get("id").toString();
-        String status = jsonObject.get("status").toString();
-        return reportService.updateReportStatus(id, status);
-    }
-
     @PostMapping(path = "/report/history", consumes = "application/json")
     public String insertIntoReportHistory(@RequestBody(required = true) String json) throws Exception {
-        JSONObject jsonObject = new JSONObject(json);
+        JsonObject jsonObject = getJsonObjectWithParams(json);
         String report = jsonObject.get("report").toString();
         String status = jsonObject.get("changeDate").toString();
         String changeDate = jsonObject.get("changeDate").toString();
