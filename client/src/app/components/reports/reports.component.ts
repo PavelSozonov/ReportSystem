@@ -46,14 +46,17 @@ export class ReportsComponent implements OnInit {
         });
     }
 
-    private selectRow(row: ReportView): void {
+    private async selectRow(row: ReportView): Promise<void> {
         const selectedReport = _.find(this.reports, report => {
             return report.number === row.number; // TODO: CHECK IT number can be hidden == null
         });
 
+        const tags = await this.reportService.getTags(selectedReport.id);
+
         const dialogRef = this.reportDialog.open(ReportDialogComponent, {
             data: <ReportDialogData>{
                 report: selectedReport,
+                tags: tags,
                 canEdit: this.authService.isAdmin(),
                 isCreate: false
             }

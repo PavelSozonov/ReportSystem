@@ -30,15 +30,15 @@
                            placeholder="Last date" />
                 </mat-form-field>
                 <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
-                <ng-template #showRecipient *ngIf="!isCreate">
-                    <mat-form-field>
+                <ng-template #showRecipient>
+                    <mat-form-field *ngIf="!isCreate">
                         <input matInput
                                formControlName="recipient"
                                placeholder="Recipient" />
                     </mat-form-field>
                 </ng-template>
-                <ng-template #showSender *ngIf="!isCreate">
-                    <mat-form-field>
+                <ng-template #showSender>
+                    <mat-form-field *ngIf="!isCreate">
                         <input matInput
                                formControlName="sender"
                                placeholder="Sender" />

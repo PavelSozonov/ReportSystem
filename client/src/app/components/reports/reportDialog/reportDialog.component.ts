@@ -44,8 +44,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
         })
         : [];
 
-    @ViewChild(ChipsComponent)
-    private chipsComponent: ChipsComponent;
+    @ViewChild(ChipsComponent) chipsComponent: ChipsComponent;
 
     private galleryOptions: NgxGalleryOptions[];
     private galleryImages: NgxGalleryImage[];
@@ -57,10 +56,12 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.buildForm();
         if (!this.isCreate) {
             console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
+            this.chipsComponent.tags = this.data.tags;
         }
-        this.buildForm();
+
         this.galleryOptions = [
             {
                 thumbnails: false,
@@ -96,8 +97,8 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
         const title: string = this.reportForm.get('title').value;
         const description: string = this.reportForm.get('description').value;
         const tags = this.chipsComponent.tags;
-        this.reportService.createReport(title, description, tags).then(submitted => {
-            this.dialogRef.close(submitted);
+        this.reportService.createReport(title, description, tags).then(reportId => {
+            this.dialogRef.close(reportId);
         }).catch(err => {
             console.error(err);
         });
@@ -122,7 +123,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
 
             reader.readAsArrayBuffer(inputNode.files[0]);
         }
-      }
+    }
 
     private buildForm(): void {
         this.report = this.isCreate ? new Report() : this.report;
@@ -167,6 +168,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
 
 export interface ReportDialogData {
     report: Report;
+    tags: string[];
     isCreate: boolean;
     canEdit: boolean;
 }
