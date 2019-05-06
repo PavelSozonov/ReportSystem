@@ -3,8 +3,11 @@
 -- DROP VIEW v_reporttags;
 
 CREATE OR REPLACE VIEW v_reporttags AS 
- SELECT rt.id AS nid, rt.report AS nreport, r.number AS snumber, 
-    tl.code AS scode, el.code as sentity
+ SELECT rt.id AS nid,         -- Identifier
+        rt.report AS nreport, -- Report
+        r.number AS snumber,  -- Number of the report within a year
+        tl.code AS scode,     -- Tag code
+        el.code as sentity    -- Mapped entity
    FROM reporttags rt
    JOIN reports r ON r.id = rt.report
    JOIN taglist tl ON rt.tag = tl.id

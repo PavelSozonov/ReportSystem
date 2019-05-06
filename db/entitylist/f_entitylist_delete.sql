@@ -2,12 +2,18 @@
 
 -- DROP FUNCTION f_entitylist_delete(numeric);
 
-CREATE OR REPLACE FUNCTION f_entitylist_delete(nid numeric)
+/* Delete the entity */
+CREATE OR REPLACE FUNCTION f_entitylist_delete(
+    nid numeric -- Entity identifier
+    )
   RETURNS void AS
 $BODY$
 	BEGIN
-		delete from entitylist 
+
+	    /* Delete the entity */
+	    delete from entitylist
 			where id = nid;
+
 	END;
 $BODY$
   LANGUAGE plpgsql;

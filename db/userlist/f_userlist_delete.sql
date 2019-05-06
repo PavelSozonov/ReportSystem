@@ -2,10 +2,15 @@
 
 -- DROP FUNCTION f_userlist_delete(numeric);
 
-CREATE OR REPLACE FUNCTION f_userlist_delete(nid numeric)
+/* Delete the user */
+CREATE OR REPLACE FUNCTION f_userlist_delete(
+    nid numeric -- User identifier
+    )
   RETURNS void AS
 $BODY$
 	BEGIN
+
+        /* Delete the user */
 		delete from userlist 
 			where id = nid;
 	END;
