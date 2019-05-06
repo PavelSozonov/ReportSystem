@@ -7,6 +7,8 @@ $mat-card-margin: 5%;
         margin-right: $mat-card-margin;
         width: 60%;
         float: left;
+        white-space: pre-wrap;
+        line-height: 150%;
 
         &.description {
             float: right;
