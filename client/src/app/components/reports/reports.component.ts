@@ -41,8 +41,6 @@ export class ReportsComponent implements OnInit {
             this.dataSource = new MatTableDataSource(reportsToView);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
-        }).catch(err => {
-            console.error(err);
         });
     }
 

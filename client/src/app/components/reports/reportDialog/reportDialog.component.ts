@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
@@ -14,7 +14,7 @@ import { ReportService } from '../../../services/report.service';
     templateUrl: 'reportDialog.component.html',
     styleUrls: ['reportDialog.component.scss']
 })
-export class ReportDialogComponent implements OnInit, AfterViewInit {
+export class ReportDialogComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<ReportDialogComponent>,
         private form: FormBuilder,
@@ -90,17 +90,12 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
         ];
     }
 
-    ngAfterViewInit(): void {
-    }
-
     private createReport(): void {
         const title: string = this.reportForm.get('title').value;
         const description: string = this.reportForm.get('description').value;
         const tags = this.chipsComponent.tags;
         this.reportService.createReport(title, description, tags).then(reportId => {
             this.dialogRef.close(reportId);
-        }).catch(err => {
-            console.error(err);
         });
     }
 
@@ -108,8 +103,6 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
         const status = this.reportForm.get('status').value;
         this.reportService.changeStatus(this.report.id, status).then(success => {
             this.dialogRef.close(success);
-        }).catch(err => {
-            console.error(err);
         });
     }
 
@@ -124,7 +117,7 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
             const reader = new FileReader();
 
             reader.onload = (e: any) => {
-               const srcResult = e.target.result;
+                const srcResult = e.target.result;
             };
 
             reader.readAsArrayBuffer(inputNode.files[0]);

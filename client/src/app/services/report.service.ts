@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
+import { List } from 'lodash';
 
 import { HttpService } from './http.service';
 import { LoggerService } from './logger.service';
-import { Report, NewReport, Status } from '../core/report';
-import { List } from 'lodash';
+import { Report, NewReport } from '../core/report';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -12,25 +12,21 @@ import { AuthService } from './auth.service';
 })
 export class ReportService {
 
-    private reports: List<Report>;
-
     constructor(private readonly httpService: HttpService,
         private readonly loggerService: LoggerService,
         private readonly authService: AuthService) {
-            this.reports = null;
     }
 
     public async getReports(): Promise<List<Report>> {
         try {
-            const reports = await this.httpService.getReports(this.authService.userName, this.authService.userEntity);
+            return await this.httpService.getReports(this.authService.userName, this.authService.userEntity);
             /* if (reports.length) {
                 this.reports = reports;
             } else {
                 this.loggerService.success('You have not any reports!');
             } */
-            return reports;
         } catch (err) {
-            this.loggerService.error(`ERROR: ${err}`);
+            this.loggerService.error('Report list was not loaded');
             return null;
         }
     }
@@ -39,7 +35,7 @@ export class ReportService {
         try {
             return await this.httpService.getReportTags(reportId);
         } catch (err) {
-            this.loggerService.error(`ERROR: ${err}`);
+            this.loggerService.error('Tag list was not loaded');
             return null;
         }
     }
@@ -52,20 +48,26 @@ export class ReportService {
                 sender: this.authService.userName,
                 tags: tags
             };
-            return await this.httpService.createReport(newReport);
+            const reportId = await this.httpService.createReport(newReport);
+            if (reportId) {
+                this.loggerService.success('Report successfully submitted!');
+            } else {
+                this.loggerService.error('Report was not be submitted');
+            }
+            return reportId;
         } catch (err) {
-            this.loggerService.error(`ERROR: ${err}`);
+            this.loggerService.error('Report was not be submitted');
             return null;
         }
     }
 
     public async changeStatus(reportId: number, status: string): Promise<boolean> {
         try {
-            const changeReportStatus = await this.httpService.changeReportStatus(reportId, Report.toStatusNumber(status));
-            this.loggerService.success(`Successfully`);
+            await this.httpService.changeReportStatus(reportId, Report.toStatusNumber(status));
+            this.loggerService.success('Report status successfully updated!');
             return true;
         } catch (err) {
-            this.loggerService.error(`ERROR: ${err}`);
+            this.loggerService.error('Report status was not be updated');
             return false;
         }
     }

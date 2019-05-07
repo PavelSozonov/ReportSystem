@@ -65,8 +65,6 @@ export class ChipsComponent implements OnInit {
         this.httpService.getTags().then(tags => {
             this.filteredTags = tags;
             console.log('Tag list was loaded');
-        }).catch(error => {
-            console.error('Tag list was not loaded');
         });
     }
 }

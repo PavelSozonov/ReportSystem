@@ -21,7 +21,7 @@ export class Report {
     }
 
     public static getChangeDate(report: Report): Date {
-       return new Date(report.changeDate);
+        return new Date(report.changeDate);
     }
 
     public static getChangeDateString(report: Report): string {
