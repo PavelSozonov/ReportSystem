@@ -11,7 +11,7 @@ import java.util.List;
 import static ru.innoreport.util.JsonUtils.getJsonObjectWithParams;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired

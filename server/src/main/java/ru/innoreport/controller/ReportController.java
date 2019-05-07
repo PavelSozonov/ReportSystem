@@ -18,7 +18,7 @@ import static ru.innoreport.util.JsonUtils.getJsonObjectWithParams;
 import static ru.innoreport.util.JsonUtils.removeQuotes;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ReportController {
 
     @Autowired

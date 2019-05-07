@@ -10,7 +10,7 @@ import javax.json.JsonObject;
 import static ru.innoreport.util.JsonUtils.getJsonObjectWithParams;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class EntityController {
 
     @Autowired
