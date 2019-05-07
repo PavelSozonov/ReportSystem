@@ -11,7 +11,7 @@ CREATE OR REPLACE FUNCTION f_taglist_insert(
 $BODY$
     DECLARE
 	    nid numeric(17);     -- New tag identifier
-        nentity numeric(17); -- ntity's identifier
+        nentity numeric(17); -- Entity's identifier
     BEGIN
 
         /* Find identifier of the entity by code */
