@@ -59,11 +59,6 @@ export class ReportDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForm();
-        if (!this.isCreate) {
-            console.log(`Report '${this.data.report.number}' was loaded into ReportDialogComponent`);
-            this.chipsComponent.tags = this.data.tags;
-        }
-
         this.galleryOptions = [
             {
                 thumbnails: false,
@@ -77,20 +72,19 @@ export class ReportDialogComponent implements OnInit {
             }
         ];
 
-        this.galleryImages = [
-            {
-                small: 'assets/innopolis.jpg',
-                medium: 'assets/innopolis.jpg',
-                big: 'assets/innopolis.jpg'
-            }
-        ];
+        if (!this.isCreate) {
+            const reportId = this.data.report.number;
+            this.setImage(this.imageService.getLink(this.report.id));
+            console.log(`Report '${reportId}' was loaded into ReportDialogComponent`);
+            this.chipsComponent.tags = this.data.tags;
+        }
     }
 
-    private async createReport(): Promise<void> {
+    private createReport(): void {
         const title: string = this.reportForm.get('title').value;
         const description: string = this.reportForm.get('description').value;
         const tags = this.chipsComponent.tags;
-        const image = await this.imageService.getImage();
+        const image = this.imageService.getBase64();
         this.reportService.createReport(title, description, tags, image).then(reportId => {
             this.dialogRef.close(reportId);
         });
