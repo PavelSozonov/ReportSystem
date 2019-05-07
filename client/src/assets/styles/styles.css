@@ -22,6 +22,10 @@ html, body {
     margin: auto;
 }
 
+.logger {
+    z-index: 1500;
+}
+
 .logger-success {
     color: yellowgreen !important;
 }

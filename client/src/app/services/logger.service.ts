@@ -16,13 +16,13 @@ export class LoggerService {
     }
 
     public success(message: string): void {
-        this.matSnackBarConfig.panelClass = ['logger-success'];
+        this.matSnackBarConfig.panelClass = ['logger', 'logger-success'];
         this.openSnackBar(message);
         console.info(message);
     }
 
     public error(message: string): void {
-        this.matSnackBarConfig.panelClass = ['logger-error'];
+        this.matSnackBarConfig.panelClass = ['logger', 'logger-error'];
         this.openSnackBar(message);
         console.warn(message);
     }
