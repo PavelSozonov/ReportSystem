@@ -1,7 +1,7 @@
 <app-dialog-header [dialogTitle]="dialogTitle"></app-dialog-header>
-<form [formGroup]="reportForm" (ngSubmit)="dialogRef.close(reportForm.value)" novalidate>
+<form [formGroup]="reportForm" (ngSubmit)="dialogRef.close(reportForm.value)" [ngClass]="{'new': isCreate}" novalidate>
     <div mat-dialog-content>
-        <div class="container">
+        <div class="content-head" [ngClass]="{'new': isCreate}">
             <div class="main-fields">
                 <mat-form-field>
                     <textarea matInput
@@ -13,8 +13,15 @@
                     </textarea>
                     <mat-error *ngIf="formErrors.title" class="form__error">{{ formErrors.title }}</mat-error>
                 </mat-form-field>
-                <app-chips [disabled]="!isCreate">
-                </app-chips>
+                <div class="description">
+                    <mat-form-field>
+                        <textarea matInput
+                                  placeholder="Description"
+                                  formControlName="description" >
+                        </textarea>
+                        <mat-error *ngIf="formErrors.description" class="form__error">{{ formErrors.description }}</mat-error>
+                    </mat-form-field>
+                </div>
                 <mat-form-field *ngIf="!isCreate">
                     <mat-select placeholder="Status" formControlName="status">
                         <mat-option *ngFor="let filteredStatus of filteredStatusList"
@@ -24,41 +31,40 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field *ngIf="!isCreate">
-                    <input matInput
-                           formControlName="changeDate"
-                           placeholder="Last date" />
-                </mat-form-field>
-                <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
-                <ng-template #showRecipient>
-                    <mat-form-field *ngIf="!isCreate">
-                        <input matInput
-                               formControlName="recipient"
-                               placeholder="Recipient" />
-                    </mat-form-field>
-                </ng-template>
-                <ng-template #showSender>
-                    <mat-form-field *ngIf="!isCreate">
-                        <input matInput
-                               formControlName="sender"
-                               placeholder="Sender" />
-                    </mat-form-field>
-                </ng-template>
             </div>
             <div class="photo">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-                <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+                <button *ngIf="isCreate"
+                        type="button"
+                        mat-raised-button
+                        (click)="fileInput.click()">
+                    Choose Image
+                </button>
+                <input hidden (change)="onSelectFile($event)" #fileInput type="file" id="file">
             </div>
         </div>
-        <mat-form-field>
-            <textarea matInput
-                      class="description"
-                      placeholder="Description"
-                      formControlName="description" >
-            </textarea>
-            <mat-error *ngIf="formErrors.description" class="form__error">{{ formErrors.description }}</mat-error>
+        <mat-form-field *ngIf="!isCreate">
+            <input matInput
+                   formControlName="changeDate"
+                   placeholder="Last date" />
         </mat-form-field>
+        <ng-container *ngIf="!canEdit; then showRecipient; else showSender"></ng-container>
+        <ng-template #showRecipient>
+            <mat-form-field *ngIf="!isCreate">
+                <input matInput
+                       formControlName="recipient"
+                       placeholder="Recipient" />
+            </mat-form-field>
+        </ng-template>
+        <ng-template #showSender>
+            <mat-form-field *ngIf="!isCreate">
+                <input matInput
+                       formControlName="sender"
+                       placeholder="Sender" />
+            </mat-form-field>
+        </ng-template>
+        <app-chips [disabled]="!isCreate">
+        </app-chips>
         <span *ngIf="!isCreate">History</span><!--TODO: Add component-->
     </div>
     <app-dialog-footer (clickSubmit)="submit()"

@@ -57,6 +57,7 @@ export interface NewReport {
     description: string;
     sender: string;
     tags: string[];
+    image?: string;
 }
 
 export enum Status {

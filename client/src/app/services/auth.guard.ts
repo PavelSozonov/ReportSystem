@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { LoggerService } from './logger.service';
-import { MatDialog } from '@angular/material';
 import { LoginDialogComponent } from '../components/login/loginDialog.component';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { LoginDialogComponent } from '../components/login/loginDialog.component'
 export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService,
         private readonly loggerService: LoggerService,
-        public loginDialog: MatDialog,
+        private loginDialog: MatDialog,
         private readonly router: Router) {}
 
     canActivate(next: ActivatedRouteSnapshot,

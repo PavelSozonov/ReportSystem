@@ -40,13 +40,14 @@ export class ReportService {
         }
     }
 
-    public async createReport(title: string, description: string, tags: string[]): Promise<number> {
+    public async createReport(title: string, description: string, tags: string[], image?: string): Promise<number> {
         try {
             const newReport: NewReport = {
                 title: title,
                 description: description,
                 sender: this.authService.userName,
-                tags: tags
+                tags: tags,
+                image: image
             };
             const reportId = await this.httpService.createReport(newReport);
             if (reportId) {

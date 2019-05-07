@@ -1,9 +1,10 @@
 import * as _ from 'lodash';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { List } from 'lodash';
+
 import { User } from '../core/user';
 import { Report, NewReport, Status } from '../core/report';
-import { List } from 'lodash';
 
 @Injectable({
     providedIn: 'root'

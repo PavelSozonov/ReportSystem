@@ -8,6 +8,7 @@ import { Report, Status } from '../../../core/report';
 import { FormService } from '../../../services/form.service';
 import { ChipsComponent } from '../../shared/chips/chips.component';
 import { ReportService } from '../../../services/report.service';
+import { ImageService } from '../../../services/image.service';
 
 @Component({
     selector: 'app-report-dialog',
@@ -20,6 +21,7 @@ export class ReportDialogComponent implements OnInit {
         private form: FormBuilder,
         private readonly formService: FormService,
         private readonly reportService: ReportService,
+        private readonly imageService: ImageService,
         @Inject(MAT_DIALOG_DATA) private data: ReportDialogData) {
     }
     private reportForm: FormGroup;
@@ -67,17 +69,11 @@ export class ReportDialogComponent implements OnInit {
                 thumbnails: false,
                 arrowNextIcon: '',
                 arrowPrevIcon: '',
-                width: '152px',
-                height: '152px',
+                width: '100%',
+                height: '66%',
+                previewZoom: true,
                 previewCloseOnClick: true,
                 previewCloseOnEsc: true
-            },
-            {
-                breakpoint: 500,
-                width: '100%',
-                height: '200px'
-                // TODO: find solution for full screen.
-                // if full screen solution for draggable dialogs will be found then switch on draggable dialogs.
             }
         ];
 
@@ -90,11 +86,12 @@ export class ReportDialogComponent implements OnInit {
         ];
     }
 
-    private createReport(): void {
+    private async createReport(): Promise<void> {
         const title: string = this.reportForm.get('title').value;
         const description: string = this.reportForm.get('description').value;
         const tags = this.chipsComponent.tags;
-        this.reportService.createReport(title, description, tags).then(reportId => {
+        const image = await this.imageService.getImage();
+        this.reportService.createReport(title, description, tags, image).then(reportId => {
             this.dialogRef.close(reportId);
         });
     }
@@ -110,18 +107,21 @@ export class ReportDialogComponent implements OnInit {
         return this.reportForm.valid && this.chipsComponent.valid();
     }
 
-    private onFileSelected() {
-        const inputNode: any = document.querySelector('#file');
-
-        if (typeof (FileReader) !== 'undefined') {
-            const reader = new FileReader();
-
-            reader.onload = (e: any) => {
-                const srcResult = e.target.result;
-            };
-
-            reader.readAsArrayBuffer(inputNode.files[0]);
+    private async onSelectFile(event: HTMLInputEvent): Promise<void> {
+        const url = await this.imageService.getImageUrl(event);
+        if (url) {
+            this.setImage(url);
         }
+    }
+
+    private setImage(url: string): void {
+        this.galleryImages = [
+            {
+                small: url,
+                medium: url,
+                big: url
+            }
+        ];
     }
 
     private buildForm(): void {

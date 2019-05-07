@@ -57,7 +57,9 @@ export class ReportsComponent implements OnInit {
                 tags: tags,
                 canEdit: this.authService.isAdmin(),
                 isCreate: false
-            }
+            },
+            height: '550px',
+            width: '650px'
         });
         console.log('LoginDialogComponent was opened');
 
@@ -75,7 +77,9 @@ export class ReportsComponent implements OnInit {
                 report: null,
                 canEdit: false,
                 isCreate: true
-            }
+            },
+            height: '450px',
+            width: '600px'
         });
         console.log('LoginDialogComponent was opened');
 
@@ -100,7 +104,7 @@ export class ReportsComponent implements OnInit {
         return baseColumns;
     }
 
-    get message(): string {
-        return 'Reports from \'InnoReportSystem\'!';
+    private get message(): string {
+        return `Reports from 'InnoReportSystem'. If you want to create new one, then press button.`;
     }
 }

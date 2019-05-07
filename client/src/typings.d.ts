@@ -5,3 +5,15 @@ interface NodeModule {
 }
 
 declare var Modernizr;
+
+interface HTMLInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+}
+
+interface FileReaderEventTarget extends EventTarget {
+    result:string
+}
+
+interface FileReaderEvent extends ProgressEvent {
+    target: FileReaderEventTarget;
+}
