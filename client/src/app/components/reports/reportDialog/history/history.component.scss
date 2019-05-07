@@ -1,0 +1,23 @@
+:host {
+    .history-list {
+        width: 100%;
+
+        table {
+            width: 100%;
+
+            .mat-sort-header-sorted {
+                color: black;
+                font-size: large;
+            }
+
+            mat-row.history-row {
+                position: relative;
+                cursor: pointer;
+
+                &:hover {
+                    background: #f5f5f5;
+                }
+            }
+        }
+    }
+}

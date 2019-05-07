@@ -6,6 +6,7 @@ import { HttpService } from './http.service';
 import { LoggerService } from './logger.service';
 import { Report, NewReport } from '../core/report';
 import { AuthService } from './auth.service';
+import { ReportHistory } from '../core/history';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,15 @@ export class ReportService {
             return await this.httpService.getReportTags(reportId);
         } catch (err) {
             this.loggerService.error('Tag list was not loaded');
+            return null;
+        }
+    }
+
+    public async getHistory(reportId: number): Promise<List<ReportHistory>> {
+        try {
+            return await this.httpService.getReportHistory(reportId);
+        } catch (err) {
+            this.loggerService.error('History list was not loaded');
             return null;
         }
     }

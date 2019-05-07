@@ -83,6 +83,11 @@ public class ReportController {
         return reportService.getTagsForReport(id);
     }
 
+    @GetMapping(path = "/reports/{id}/history")
+    public List<ReportHistory> getHistoryForReport(@PathVariable("id") String id) {
+        return reportService.getHistoryForReport(id);
+    }
+
     @GetMapping("/reports/{username}")
     public List<Report> getReportsView(@PathVariable("username") String username) {
         return reportService.getReportsView(username, null);
@@ -100,11 +105,6 @@ public class ReportController {
         String id = jsonObject.get("id").toString();
         String status = jsonObject.get("status").toString();
         return reportService.updateReportStatus(id, status);
-    }
-
-    @GetMapping("/report/history")
-    public List<ReportHistory> getReportHistoryView() {
-        return reportService.getReportHistoryView();
     }
 
     @GetMapping("/report/tag")

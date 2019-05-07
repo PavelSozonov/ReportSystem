@@ -40,19 +40,6 @@ public class ReportService {
         ).stream().collect(Collectors.toList());
     }
 
-    public List<ReportHistory> getReportHistoryView() {
-
-        return jdbcTemplate.query(
-                "SELECT * FROM v_reporthistory",
-                (rs, rowNum) -> new ReportHistory(rs.getLong("nid"),
-                        rs.getLong("nreport"),
-                        rs.getString("snumber"),
-                        rs.getInt("nstatus"),
-                        rs.getTimestamp("dchangedate").getTime()
-                )
-        ).stream().collect(Collectors.toList());
-    }
-
     public Report getReport(Long id) {
 
         return jdbcTemplate.query(
@@ -158,6 +145,15 @@ public class ReportService {
 
         return (List<String>)jdbcTemplate.query(
                 queryString, (rs, rowNum) -> new String(rs.getString("scode"))
+        ).stream().collect(Collectors.toList());
+    }
+
+    public List<ReportHistory> getHistoryForReport(String id) {
+        String queryString = "SELECT nstatus, dchangedate FROM v_reporthistory WHERE nreport = '" + id + "'";
+
+        return (List<ReportHistory>)jdbcTemplate.query(
+                queryString, (rs, rowNum) -> new ReportHistory(rs.getInt("nstatus"),
+                    rs.getTimestamp("dchangedate").getTime())
         ).stream().collect(Collectors.toList());
     }
 

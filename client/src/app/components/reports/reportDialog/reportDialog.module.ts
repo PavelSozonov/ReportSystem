@@ -11,6 +11,7 @@ import { ReportService } from '../../../services/report.service';
 import { FormService } from '../../../services/form.service';
 import { ChipsModule } from '../../shared/chips/chips.module';
 import { ImageService } from '../../../services/image.service';
+import { HistoryModule } from './history/history.module';
 
 @NgModule({
     declarations: [ReportDialogComponent],
@@ -20,6 +21,7 @@ import { ImageService } from '../../../services/image.service';
         ReactiveFormsModule,
         CommonModule,
         ChipsModule,
+        HistoryModule,
         NgxGalleryModule
     ],
     bootstrap: [ReportDialogComponent],

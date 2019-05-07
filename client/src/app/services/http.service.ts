@@ -5,6 +5,7 @@ import { List } from 'lodash';
 
 import { User } from '../core/user';
 import { Report, NewReport, Status } from '../core/report';
+import { ReportHistory } from '../core/history';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,12 @@ export class HttpService {
         return <Promise<boolean>>this.http.put(`${this.baseUrl}/reports/status`, {
             headers: this.headers,
             params: params
+        }).toPromise();
+    }
+
+    public getReportHistory(reportId: number): Promise<List<ReportHistory>> {
+        return <Promise<List<ReportHistory>>>this.http.get(`${this.baseUrl}/reports/${reportId}/history/`, {
+            headers: this.headers
         }).toPromise();
     }
 }

@@ -13,15 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ReportHistory implements Serializable {
 
-    @Id
-    private Long id;
-
-    @NotBlank
-    private Long report;
-
-    @NotBlank
-    private String number;
-
     @NotBlank
     private Integer status;
 

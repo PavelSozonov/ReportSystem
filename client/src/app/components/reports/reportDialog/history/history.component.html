@@ -1,0 +1,21 @@
+<div class="history-list mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Change date Column -->
+        <ng-container matColumnDef="changeDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+            <mat-cell *matCellDef="let history"> {{history.changeDate}} </mat-cell>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let history"> {{history.status}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                 class="history-row">
+        </mat-row>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

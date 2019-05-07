@@ -50,11 +50,13 @@ export class ReportsComponent implements OnInit {
         });
 
         const tags = await this.reportService.getTags(selectedReport.id);
+        const history = await this.reportService.getHistory(selectedReport.id);
 
         const dialogRef = this.reportDialog.open(ReportDialogComponent, {
             data: <ReportDialogData>{
                 report: selectedReport,
                 tags: tags,
+                history: history,
                 canEdit: this.authService.isAdmin(),
                 isCreate: false
             },
@@ -74,7 +76,6 @@ export class ReportsComponent implements OnInit {
     private openNewReportDialog(): void {
         const dialogRef = this.reportDialog.open(ReportDialogComponent, {
             data: <ReportDialogData>{
-                report: null,
                 canEdit: false,
                 isCreate: true
             },

@@ -65,7 +65,7 @@
         </ng-template>
         <app-chips [disabled]="!isCreate">
         </app-chips>
-        <span *ngIf="!isCreate">History</span><!--TODO: Add component-->
+        <app-history *ngIf="!isCreate" [history]="history"></app-history>
     </div>
     <app-dialog-footer (clickSubmit)="submit()"
                        [disabled]="!valid()"

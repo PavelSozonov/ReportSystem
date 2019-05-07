@@ -9,6 +9,7 @@ import { FormService } from '../../../services/form.service';
 import { ChipsComponent } from '../../shared/chips/chips.component';
 import { ReportService } from '../../../services/report.service';
 import { ImageService } from '../../../services/image.service';
+import { ReportHistory } from '../../../core/history';
 
 @Component({
     selector: 'app-report-dialog',
@@ -33,6 +34,7 @@ export class ReportDialogComponent implements OnInit {
     private readonly canEdit = this.data.canEdit;
 
     private report: Report = this.data.report;
+    private history: ReportHistory[] = this.data.history;
 
     private readonly dialogTitle = this.isCreate ? 'New Report' : `Report '${this.report.number}'`;
     private readonly submitButtonName = this.isCreate ? 'Submit' : this.canEdit ? 'Change Status' : null;
@@ -161,8 +163,9 @@ export class ReportDialogComponent implements OnInit {
 }
 
 export interface ReportDialogData {
-    report: Report;
-    tags: string[];
+    report?: Report;
+    tags?: string[];
+    history?: ReportHistory[];
     isCreate: boolean;
     canEdit: boolean;
 }
