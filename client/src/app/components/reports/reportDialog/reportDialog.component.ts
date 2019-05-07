@@ -105,6 +105,12 @@ export class ReportDialogComponent implements OnInit, AfterViewInit {
     }
 
     private changeStatus(): void {
+        const status = this.reportForm.get('status').value;
+        this.reportService.changeStatus(this.report.id, status).then(success => {
+            this.dialogRef.close(success);
+        }).catch(err => {
+            console.error(err);
+        });
     }
 
     private valid(): boolean {

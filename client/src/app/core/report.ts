@@ -31,6 +31,17 @@ export class Report {
     public static getStatusString(report: Report): string {
         return Status[report.status];
     }
+
+    public static toStatusNumber(status: string): number {
+        switch (status) {
+            case Status[Status.New]: return 0;
+            case Status[Status.Sent]: return 1;
+            case Status[Status.Received]: return 2;
+            case Status[Status['In progress']]: return 3;
+            case Status[Status.Solved]: return 4;
+            case Status[Status.Declined]: return 5;
+        }
+    }
 }
 
 export interface ReportView {

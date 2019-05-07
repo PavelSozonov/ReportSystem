@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpService } from './http.service';
 import { LoggerService } from './logger.service';
-import { Report, NewReport } from '../core/report';
+import { Report, NewReport, Status } from '../core/report';
 import { List } from 'lodash';
 import { AuthService } from './auth.service';
 
@@ -56,6 +56,17 @@ export class ReportService {
         } catch (err) {
             this.loggerService.error(`ERROR: ${err}`);
             return null;
+        }
+    }
+
+    public async changeStatus(reportId: number, status: string): Promise<boolean> {
+        try {
+            const changeReportStatus = await this.httpService.changeReportStatus(reportId, Report.toStatusNumber(status));
+            this.loggerService.success(`Successfully`);
+            return true;
+        } catch (err) {
+            this.loggerService.error(`ERROR: ${err}`);
+            return false;
         }
     }
 }

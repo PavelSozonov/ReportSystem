@@ -63,8 +63,11 @@ export class ReportsComponent implements OnInit {
         });
         console.log('LoginDialogComponent was opened');
 
-        dialogRef.afterClosed().subscribe(() => {
+        dialogRef.afterClosed().subscribe((success: boolean) => {
             console.log('LoginDialogComponent was closed');
+            if (success) {
+                this.updateTable();
+            }
         });
     }
 

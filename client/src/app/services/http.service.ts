@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../core/user';
-import { Report, NewReport } from '../core/report';
+import { Report, NewReport, Status } from '../core/report';
 import { List } from 'lodash';
 
 @Injectable({
@@ -42,6 +42,14 @@ export class HttpService {
     public createReport(report: NewReport): Promise<number> {
         const params = JSON.stringify(report);
         return <Promise<number>>this.http.post(`${this.baseUrl}/reports/`, {
+            headers: this.headers,
+            params: params
+        }).toPromise();
+    }
+
+    public changeReportStatus(reportId: number, status: number): Promise<boolean> {
+        const params = JSON.stringify({id: reportId, status: status});
+        return <Promise<boolean>>this.http.put(`${this.baseUrl}/reports/status`, {
             headers: this.headers,
             params: params
         }).toPromise();
