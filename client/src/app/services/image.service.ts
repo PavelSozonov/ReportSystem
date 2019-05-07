@@ -16,8 +16,10 @@ export class ImageService {
     constructor(private readonly logger: LoggerService) {
     }
 
-    public getLink(reportId: number) {
-        return `${this.url}/${reportId}${this.suffix}`;
+    public getLink(reportId: number): string {
+        const link = `${this.url}/${reportId}${this.suffix}`;
+        // TODO: check link coerrectness
+        return link;
     }
 
     public getImageUrl(event: HTMLInputEvent): Promise<string> {
@@ -41,6 +43,9 @@ export class ImageService {
     }
 
     public getBase64(): string {
-        return this.base64.replace(this.prefixBase64, '');
+        if (this.base64) {
+            return this.base64.replace(this.prefixBase64, '');
+        }
+        return '';
     }
 }

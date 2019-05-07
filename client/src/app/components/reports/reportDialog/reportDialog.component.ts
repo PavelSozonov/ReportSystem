@@ -59,6 +59,14 @@ export class ReportDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.buildForm();
+
+        if (!this.isCreate) {
+            const reportId = this.data.report.number;
+            this.setImage(this.imageService.getLink(this.report.id));
+            console.log(`Report '${reportId}' was loaded into ReportDialogComponent`);
+            this.chipsComponent.tags = this.data.tags;
+        }
+
         this.galleryOptions = [
             {
                 thumbnails: false,
@@ -71,13 +79,6 @@ export class ReportDialogComponent implements OnInit {
                 previewCloseOnEsc: true
             }
         ];
-
-        if (!this.isCreate) {
-            const reportId = this.data.report.number;
-            this.setImage(this.imageService.getLink(this.report.id));
-            console.log(`Report '${reportId}' was loaded into ReportDialogComponent`);
-            this.chipsComponent.tags = this.data.tags;
-        }
     }
 
     private createReport(): void {
