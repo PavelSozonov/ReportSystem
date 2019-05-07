@@ -117,7 +117,8 @@ public class ReportController {
         JsonObject jsonObject = getJsonObjectWithParams(json);
         String code = jsonObject.get("code").toString();
         String name = jsonObject.get("name").toString();
-        return reportService.insertIntoTagList(code, name);
+        String entity = jsonObject.get("entity").toString();
+        return reportService.insertIntoTagList(code, name, entity);
     }
 
     @PostMapping(path = "/report/status", consumes = "application/json")

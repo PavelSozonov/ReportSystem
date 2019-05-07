@@ -142,11 +142,12 @@ public class ReportService {
         return result.get("returnvalue").toString();
     }
 
-    public String insertIntoTagList(String code, String name) {
+    public String insertIntoTagList(String code, String name, String entity) {
         final SimpleJdbcCall insertIntoTagList = new SimpleJdbcCall(jdbcTemplate).withFunctionName("f_taglist_insert");
         final Map<String, Object> params = new HashMap<>();
         params.put("scode", code);
         params.put("sname", name);
+        params.put("sentity", entity);
 
         final Map<String, Object> result = insertIntoTagList.execute(params);
         return result.get("returnvalue").toString();
