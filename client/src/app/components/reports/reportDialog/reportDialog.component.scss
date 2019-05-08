@@ -12,10 +12,14 @@
 
             mat-form-field {
                 width: 100%;
-            }
 
-            .mat-input-element:disabled {
-                color: black;
+                .mat-input-element:disabled, .mat-select-disabled::ng-deep .mat-select-value {
+                    color: black;
+                }
+
+                textarea {
+                    resize: none;
+                }
             }
 
             .content-head {

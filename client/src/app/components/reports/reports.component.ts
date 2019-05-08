@@ -46,7 +46,7 @@ export class ReportsComponent implements OnInit {
 
     private async selectRow(row: ReportView): Promise<void> {
         const selectedReport = _.find(this.reports, report => {
-            return report.number === row.number; // TODO: CHECK IT number can be hidden == null
+            return report.number === row.number;
         });
 
         const tags = await this.reportService.getTags(selectedReport.id);
@@ -63,10 +63,10 @@ export class ReportsComponent implements OnInit {
             height: '550px',
             width: '650px'
         });
-        console.log('LoginDialogComponent was opened');
+        console.log('ReportDialog was opened');
 
         dialogRef.afterClosed().subscribe((success: boolean) => {
-            console.log('LoginDialogComponent was closed');
+            console.log('ReportDialog was closed');
             if (success) {
                 this.updateTable();
             }
@@ -82,10 +82,10 @@ export class ReportsComponent implements OnInit {
             height: '450px',
             width: '600px'
         });
-        console.log('LoginDialogComponent was opened');
+        console.log('NewReportDialog was opened');
 
         dialogRef.afterClosed().subscribe((value: any) => {
-            console.log('LoginDialogComponent was closed');
+            console.log('NewReportDialog was closed');
             if (value) {
                 this.updateTable();
             }
