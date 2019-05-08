@@ -22,9 +22,9 @@ public class ReportService {
     JdbcTemplate jdbcTemplate;
 
     public List<Report> getReportsView(String username, String entity) {
-        String queryString = "SELECT * FROM v_reports WHERE ssender = '" + username + "'";
+        String queryString = "SELECT * FROM v_reports";
         queryString = entity != null
-            ? queryString + " OR srecipient = '" + entity + "'"
+            ? queryString + " WHERE srecipient = '" + entity + "'"
             : queryString;
 
         return (List<Report>)jdbcTemplate.query(
