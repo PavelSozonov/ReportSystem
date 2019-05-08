@@ -22,5 +22,9 @@ mat-toolbar {
     button {
         display: inline-block;
         width: 48.4%;
+
+        &:last-child {
+            margin-left: 3%;
+        }
     }
 }
