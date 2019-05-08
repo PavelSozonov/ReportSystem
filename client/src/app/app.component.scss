@@ -1,5 +1,4 @@
 :host {
-
     /* We are using margin for scroll only to avoid conflicts with mat-toolbar menu */
     ::-webkit-scrollbar-track {
         margin-top: 64px;
@@ -76,7 +75,7 @@
                 repeat: no-repeat;
                 attachment: fixed;
                 size: cover;
-                blend-mode: color; // TODO: check browser compatibility
+                blend-mode: color;
             }
 
             router-outlet {

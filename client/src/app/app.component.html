@@ -9,6 +9,10 @@
                     <mat-icon matListIcon>{{link.icon}}</mat-icon>
                     <span>{{link.label}}</span>
                 </button>
+                <button mat-menu-item (click)="openNewReportDialog()">
+                    <mat-icon matListIcon>add</mat-icon>
+                    <span>New report</span>
+                </button>
             </mat-menu>
         </span>
         <span class="toolbar-section">Inno Report System</span>

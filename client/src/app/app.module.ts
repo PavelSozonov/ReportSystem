@@ -12,6 +12,7 @@ import { LoginDialogModule } from './components/login/loginDialog.module';
 import { HttpService } from './services/http.service';
 import { LoggerService } from './services/logger.service';
 import { ReportsModule } from './components/reports/reports.module';
+import { ReportDialogModule } from './components/reports/reportDialog/reportDialog.module';
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -27,9 +28,9 @@ const routes: Routes = [
         HttpClientModule,
         HomeModule,
         ReportsModule,
+        ReportDialogModule,
         LoginDialogModule
     ],
-    entryComponents: [],
     providers: [AuthService, HttpService, LoggerService],
     bootstrap: [AppComponent]
 })
