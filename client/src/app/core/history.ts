@@ -18,7 +18,7 @@ export class ReportHistory {
     }
 
     public static getChangeDateString(history: ReportHistory): string {
-        return ReportHistory.getChangeDate(history).toUTCString();
+        return ReportHistory.getChangeDate(history).toLocaleString();
     }
 
     public static getStatusString(history: ReportHistory): string {

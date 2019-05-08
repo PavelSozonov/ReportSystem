@@ -25,7 +25,7 @@ export class Report {
     }
 
     public static getChangeDateString(report: Report): string {
-        return Report.getChangeDate(report).toUTCString();
+        return Report.getChangeDate(report).toLocaleString();
     }
 
     public static getStatusString(report: Report): string {
