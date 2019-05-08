@@ -10,6 +10,24 @@ $mat-card-margin: 5%;
         white-space: pre-wrap;
         line-height: 150%;
 
+        &.title {
+            margin-left: 22%;
+            margin-right: 22%;
+            margin-top: 5%;
+            width: 55%;
+
+            mat-card-header {
+                display: inline-block;
+                width: 80%;
+            }
+
+            .view-reports {
+                display: inline-block;
+                width: 20%;
+                text-align: right;
+            }
+        }
+
         &.description {
             float: right;
         }
@@ -33,6 +51,12 @@ $mat-card-margin: 5%;
 
                 &.description {
                     float: none;
+                }
+
+                &.title {
+                    margin-left: $mat-card-margin;
+                    margin-right: $mat-card-margin;
+                    width: 80%;
                 }
             }
         }

@@ -39,15 +39,33 @@
                     margin-left: 1%;
                     width: 29%;
                     height: 100%;
-    
+
                     button {
                         width: 100%;
                     }
                 }
             }
 
-            .description {
+            @media (max-width: 600px) {
+                .content-head {
+                    margin-top: 20px;
+                    height: 100%;
 
+                    .main-fields {
+                        display: block;
+                        width: 100%;
+                    }
+
+                    .photo {
+                        display: block;
+                        margin-left: 0;
+                        width: 100%;
+                        height: 43%;
+                    }
+                }
+            }
+
+            .description {
                 textarea {
                     min-height: 50px;
                     max-height: 270px;

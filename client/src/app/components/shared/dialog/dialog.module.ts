@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { MaterialModule } from '../material.module';
 import { DialogHeaderComponent } from './dialogHeader.component';
 import { DialogFooterComponent } from './dialogFooter.component';
-import { CommonModule } from '@angular/common';
+import { NoDblClickDirectiveMat } from './noDoubleClickMaterial';
 
 @NgModule({
-    declarations: [DialogHeaderComponent, DialogFooterComponent],
+    declarations: [DialogHeaderComponent, DialogFooterComponent, NoDblClickDirectiveMat],
     imports: [
         MaterialModule,
         CommonModule

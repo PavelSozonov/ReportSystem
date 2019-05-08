@@ -1,10 +1,12 @@
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8 title">
     <mat-card-header>
-        <mat-card-title>InnoReport MVP:</mat-card-title>
-        <button mat-button [routerLink]="['/reports']">
-            <mat-icon>assignment</mat-icon>
-            View Reports
-        </button>
+        <mat-card-title>InnoReport MVP</mat-card-title>
+        <div class="view-reports">
+            <button mat-button [routerLink]="['/reports']">
+                <mat-icon>assignment</mat-icon>
+                View Reports
+            </button>
+        </div>
     </mat-card-header>
 </mat-card>
 
@@ -17,7 +19,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8 description">
     <mat-card-header>
         <mat-card-title>Front-end</mat-card-title>
     </mat-card-header>
@@ -35,7 +37,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z8 description">
     <mat-card-header>
         <mat-card-title>Architecture and quality attributes</mat-card-title>
     </mat-card-header>
