@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgxGalleryOptions } from 'ngx-gallery';
 
 import { LoggerService } from './logger.service';
+import { HttpService } from './http.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,17 +12,32 @@ export class ImageService {
 
     private base64: string;
 
-    private readonly url = 'https://www.googleapis.com/download/storage/v1/b/innoreport-b3617.appspot.com/o';
-    private readonly suffix = '.jpg?alt=media';
+    private readonly url = 'https://www.googleapis.com/download/storage/v1/b/innoreport-b3617.appspot.com/o/';
+    private readonly extension = '.jpg';
+    private readonly suffix = '?alt=media';
     private readonly prefixBase64 = 'data:image/jpeg;base64,';
 
-    constructor(private readonly logger: LoggerService) {
+    constructor(private readonly logger: LoggerService,
+        private readonly httpService: HttpService) {
     }
 
-    public getLink(reportId: number): string {
-        const link = `${this.url}/${reportId}${this.suffix}`;
-        // TODO: check link coerrectness
-        return link;
+    public getLink(reportId: number): Promise<string> {
+        const link = `${this.url}${reportId}${this.extension}${this.suffix}`;
+        return new Promise(resolve => {
+            this.httpService.checkImageUrl(link).then(value => {
+                if (value) {
+                    resolve(link);
+                } else {
+                    resolve(null);
+                }
+            }).catch((err: HttpErrorResponse) => {
+                if (err.status === 200) {
+                    resolve(link);
+                } else {
+                    resolve(null);
+                }
+            });
+        });
     }
 
     public getImageUrl(event: HTMLInputEvent): Promise<string> {
@@ -47,5 +65,20 @@ export class ImageService {
             return this.base64.replace(this.prefixBase64, '');
         }
         return '';
+    }
+
+    public getGalleryOptions(): NgxGalleryOptions[] {
+        return [
+            {
+                thumbnails: false,
+                arrowNextIcon: '',
+                arrowPrevIcon: '',
+                width: '100%',
+                height: '66%',
+                previewZoom: true,
+                previewCloseOnClick: true,
+                previewCloseOnEsc: true
+            }
+        ];
     }
 }

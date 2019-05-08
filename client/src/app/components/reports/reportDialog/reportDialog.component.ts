@@ -53,34 +53,24 @@ export class ReportDialogComponent implements OnInit {
     private galleryOptions: NgxGalleryOptions[];
     private galleryImages: NgxGalleryImage[];
 
-    private submitted = false;
-
     private checkStatusOption(option: string): boolean {
         return _.includes(this.disabledStatusList, option);
     }
 
     ngOnInit(): void {
         this.buildForm();
+        this.galleryOptions = this.imageService.getGalleryOptions();
 
         if (!this.isCreate) {
             const reportId = this.data.report.number;
-            this.setImage(this.imageService.getLink(this.report.id));
+            this.imageService.getLink(this.report.id).then(imageUrl => {
+                if (imageUrl) {
+                    this.setImage(imageUrl);
+                }
+            });
             console.log(`Report '${reportId}' was loaded into ReportDialogComponent`);
             this.chipsComponent.tags = this.data.tags;
         }
-
-        this.galleryOptions = [
-            {
-                thumbnails: false,
-                arrowNextIcon: '',
-                arrowPrevIcon: '',
-                width: '100%',
-                height: '66%',
-                previewZoom: true,
-                previewCloseOnClick: true,
-                previewCloseOnEsc: true
-            }
-        ];
     }
 
     private createReport(): void {
@@ -94,10 +84,15 @@ export class ReportDialogComponent implements OnInit {
     }
 
     private changeStatus(): void {
-        const status = this.reportForm.get('status').value;
-        this.reportService.changeStatus(this.report.id, status).then(success => {
-            this.dialogRef.close(success);
-        });
+        const status: string = this.reportForm.get('status').value;
+        if (status === Report.getStatusString(this.report)) {
+            this.dialogRef.close(false);
+            console.log('You did not change report status');
+        } else {
+            this.reportService.changeStatus(this.report.id, status).then(success => {
+                this.dialogRef.close(success);
+            });
+        }
     }
 
     private valid(): boolean {
@@ -133,7 +128,7 @@ export class ReportDialogComponent implements OnInit {
             ]),
             status: new FormControl({
                 value: Report.getStatusString(this.report),
-                disabled: this.isCreate && !this.canEdit
+                disabled: !this.isCreate && !this.canEdit
             }),
             changeDate: new FormControl({
                 value: Report.getChangeDateString(this.report),

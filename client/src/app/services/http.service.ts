@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { List } from 'lodash';
 
 import { User } from '../core/user';
-import { Report, NewReport, Status } from '../core/report';
+import { Report, NewReport } from '../core/report';
 import { ReportHistory } from '../core/history';
 
 @Injectable({
@@ -61,5 +61,9 @@ export class HttpService {
         return <Promise<List<ReportHistory>>>this.http.get(`${this.baseUrl}/reports/${reportId}/history/`, {
             headers: this.headers
         }).toPromise();
+    }
+
+    public checkImageUrl(url: string): Promise<any> {
+        return <Promise<any>>this.http.get(url).toPromise();
     }
 }
